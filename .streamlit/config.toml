@@ -6,7 +6,9 @@ secondaryBackgroundColor = "#F3F6FA"
 textColor = "#10233A"
 
 [server]
-headless = false
+# true: no Streamlit Cloud o app sobe sem esperar ninguem digitar e-mail.
+# O rodar.bat abre o navegador sozinho com --server.headless false.
+headless = true
 
 [browser]
 gatherUsageStats = false

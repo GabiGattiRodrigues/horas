@@ -110,7 +110,7 @@ echo  Para fechar: Ctrl+C aqui, ou feche esta janela.
 echo.
 echo  Para refazer os resultados do zero, apague a pasta artifacts e rode de novo.
 echo.
-"%VPY%" -m streamlit run app.py
+"%VPY%" -m streamlit run app.py --server.headless false
 if errorlevel 1 (
   echo.
   echo  [ X ]  O app encerrou com erro. A mensagem esta acima.
