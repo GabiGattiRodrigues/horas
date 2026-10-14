@@ -1,0 +1,280 @@
+{
+ "variaveis": [
+  "km",
+  "seller_state",
+  "customer_state",
+  "dia_semana",
+  "frete",
+  "peso",
+  "qtd_itens",
+  "vend_manuseio_mediana",
+  "vend_manuseio_p90",
+  "vend_pedidos"
+ ],
+ "categorias": {
+  "seller_state": [
+   "AC",
+   "AM",
+   "BA",
+   "CE",
+   "DF",
+   "ES",
+   "GO",
+   "MA",
+   "MG",
+   "MS",
+   "MT",
+   "PA",
+   "PB",
+   "PE",
+   "PI",
+   "PR",
+   "RJ",
+   "RN",
+   "RO",
+   "RS",
+   "SC",
+   "SE",
+   "SP"
+  ],
+  "customer_state": [
+   "AC",
+   "AL",
+   "AM",
+   "AP",
+   "BA",
+   "CE",
+   "DF",
+   "ES",
+   "GO",
+   "MA",
+   "MG",
+   "MS",
+   "MT",
+   "PA",
+   "PB",
+   "PE",
+   "PI",
+   "PR",
+   "RJ",
+   "RN",
+   "RO",
+   "RR",
+   "RS",
+   "SC",
+   "SE",
+   "SP",
+   "TO"
+  ]
+ },
+ "q": 0.92,
+ "n_arvores": 300,
+ "treino_de": "2018-02",
+ "treino_ate": "2018-07",
+ "mes": "2018-08",
+ "p92_treino": 26.0,
+ "treze_pedidos": [
+  {
+   "order_id": "ee590d1b6e4571a2c03e30571fef072f",
+   "prazo_real": 4.0
+  },
+  {
+   "order_id": "3023efa2840e41b0609d1879b171cba7",
+   "prazo_real": 6.0
+  },
+  {
+   "order_id": "cecab9a50124b827ad862cb191df18a8",
+   "prazo_real": 7.0
+  },
+  {
+   "order_id": "50ef0803caecc37cffe206f09dbc70b3",
+   "prazo_real": 7.0
+  },
+  {
+   "order_id": "5fd71cc4eb69ae6f65ac3acfcbc17ab5",
+   "prazo_real": 10.0
+  },
+  {
+   "order_id": "8dabb452ae99a1e4d68d506101882e7a",
+   "prazo_real": 11.0
+  },
+  {
+   "order_id": "96eeb147a88eecc583923d44e1e85311",
+   "prazo_real": 11.0
+  },
+  {
+   "order_id": "3a781a72374ad22c36cc60ffdbcc9b98",
+   "prazo_real": 13.0
+  },
+  {
+   "order_id": "bd31b009e1dbc47fc7c250b1e2cf5440",
+   "prazo_real": 14.0
+  },
+  {
+   "order_id": "ca61d72c0b9e1072b94af79bac8ff610",
+   "prazo_real": 14.0
+  },
+  {
+   "order_id": "2b75e42293f156e0750722d1bb658389",
+   "prazo_real": 21.0
+  },
+  {
+   "order_id": "8d9c0dc8d5a2ce804f6b925d8f8e6c1d",
+   "prazo_real": 22.0
+  },
+  {
+   "order_id": "93c7ec2b9638f73ddcaefac525f4d7b6",
+   "prazo_real": 43.0
+  }
+ ],
+ "p92_por_rota": [
+  {
+   "rota": "SP>SP",
+   "pedidos": 13165,
+   "mediana": 6.0,
+   "p92": 15.0
+  },
+  {
+   "rota": "SP>RJ",
+   "pedidos": 3133,
+   "mediana": 13.0,
+   "p92": 38.0
+  },
+  {
+   "rota": "SP>MG",
+   "pedidos": 2933,
+   "mediana": 11.0,
+   "p92": 24.0
+  },
+  {
+   "rota": "SP>RS",
+   "pedidos": 1385,
+   "mediana": 14.0,
+   "p92": 31.0
+  },
+  {
+   "rota": "PR>SP",
+   "pedidos": 1344,
+   "mediana": 10.0,
+   "p92": 20.0
+  },
+  {
+   "rota": "SP>PR",
+   "pedidos": 1248,
+   "mediana": 11.0,
+   "p92": 23.0
+  },
+  {
+   "rota": "SP>BA",
+   "pedidos": 990,
+   "mediana": 19.0,
+   "p92": 36.0
+  },
+  {
+   "rota": "SP>SC",
+   "pedidos": 926,
+   "mediana": 13.0,
+   "p92": 28.0
+  },
+  {
+   "rota": "MG>SP",
+   "pedidos": 880,
+   "mediana": 9.0,
+   "p92": 19.0
+  },
+  {
+   "rota": "SP>DF",
+   "pedidos": 631,
+   "mediana": 11.0,
+   "p92": 24.0
+  }
+ ],
+ "vendedor_rapido_lento": [
+  {
+   "faixa": "rapido",
+   "pedidos": 685,
+   "mediana": 10.0,
+   "p92": 31.0
+  },
+  {
+   "faixa": "medio",
+   "pedidos": 1951,
+   "mediana": 13.0,
+   "p92": 39.0
+  },
+  {
+   "faixa": "lento",
+   "pedidos": 497,
+   "mediana": 18.0,
+   "p92": 44.0
+  }
+ ],
+ "backtest_por_mes": [
+  {
+   "mes": "2018-01",
+   "pedidos": 7187,
+   "no_prazo_atual": 0.9275080005565605,
+   "no_prazo_nova": 0.8641992486433839,
+   "dias_atual": 26.96646723250313,
+   "dias_nova": 21.285793794350912
+  },
+  {
+   "mes": "2018-02",
+   "pedidos": 6624,
+   "no_prazo_atual": 0.8497886473429952,
+   "no_prazo_nova": 0.8174818840579711,
+   "dias_atual": 25.167270531400966,
+   "dias_nova": 22.454106280193237
+  },
+  {
+   "mes": "2018-03",
+   "pedidos": 7168,
+   "no_prazo_atual": 0.7917131696428571,
+   "no_prazo_nova": 0.84375,
+   "dias_atual": 22.735491071428573,
+   "dias_nova": 24.484375
+  },
+  {
+   "mes": "2018-04",
+   "pedidos": 6919,
+   "no_prazo_atual": 0.9382858794623501,
+   "no_prazo_nova": 0.955340367105073,
+   "dias_atual": 24.343980343980345,
+   "dias_nova": 25.202196849255674
+  },
+  {
+   "mes": "2018-05",
+   "pedidos": 6833,
+   "no_prazo_atual": 0.9228742865505635,
+   "no_prazo_nova": 0.9407288160398068,
+   "dias_atual": 23.522610859066297,
+   "dias_nova": 23.726913507976
+  },
+  {
+   "mes": "2018-06",
+   "pedidos": 6145,
+   "no_prazo_atual": 0.9804719283970708,
+   "no_prazo_nova": 0.9739625711960944,
+   "dias_atual": 28.394792514239217,
+   "dias_nova": 23.468836452400325
+  },
+  {
+   "mes": "2018-07",
+   "pedidos": 6233,
+   "no_prazo_atual": 0.9542756297128189,
+   "no_prazo_nova": 0.9626183218353923,
+   "dias_atual": 20.332905502968075,
+   "dias_nova": 22.294400770094658
+  },
+  {
+   "mes": "2018-08",
+   "pedidos": 6421,
+   "no_prazo_atual": 0.9278928515807506,
+   "no_prazo_nova": 0.9634013393552406,
+   "dias_atual": 15.775112910761564,
+   "dias_nova": 19.304002491823702
+  }
+ ],
+ "no_prazo_ago_atual": 0.9278928515807506,
+ "no_prazo_ago_nova": 0.9634013393552406
+}

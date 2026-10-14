@@ -1,0 +1,40 @@
+name: Publicar a pagina
+
+# A cada push na main, a pasta site/ vai para o GitHub Pages
+# (gabigattirodrigues.github.io/horas/). Os numeros ja estao dentro da pagina,
+# gravados pelo scripts/exportar_pagina.py, entao aqui nao roda nenhuma analise.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Liga o Pages pelo proprio workflow, sem precisar configurar na mao
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

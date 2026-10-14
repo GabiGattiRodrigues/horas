@@ -1,0 +1,1120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Horas — Gabriela Gatti Rodrigues</title>
+<meta name="description" content="Quanto prometer de prazo de entrega: promessa calibrada por pedido com regressão quantílica, backtest fora da amostra, gráfico de controle e desenho do teste de conversão.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+
+<style>
+
+  :root {
+    --ground:      #F6F8FB;
+    --surface:     #FFFFFF;
+    --surface-alt: #EDF2F8;
+    --ink:         #10233A;
+    --ink-soft:    #4C6179;
+    --ink-faint:   #7F92A6;
+    --line:        #D7E0EA;
+    --line-strong: #B9C8D8;
+    --azure:       #1857B0;
+    --azure-soft:  #E4EDF9;
+    --bronze:      #9C5A2B;
+    --prata:       #2F7FB5;
+    --ouro:        #A37C12;
+    --deep:        #08182A;
+    --deep-ink:    #DCE7F2;
+    --deep-soft:   #8FA6BE;
+    --deep-line:   #1D3550;
+    --shadow:      0 1px 2px rgba(16, 35, 58, .06), 0 8px 24px -16px rgba(16, 35, 58, .22);
+    --radius:      10px;
+    --measure:     68ch;
+    --ok:          #1B7A47;
+    --bad:         #B3261E;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #08141F;
+      --surface:     #0E1F2E;
+      --surface-alt: #13293B;
+      --ink:         #E3ECF5;
+      --ink-soft:    #A3B6C9;
+      --ink-faint:   #7A8EA3;
+      --line:        #1B3245;
+      --line-strong: #2A4762;
+      --azure:       #6BA6FF;
+      --azure-soft:  #12293F;
+      --ok:          #4FBE85;
+      --bad:         #F2836F;
+      --bronze:      #B06E33;
+      --prata:       #3D87C4;
+      --ouro:        #AE871B;
+      --shadow:      0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #08141F;
+    --surface:     #0E1F2E;
+    --surface-alt: #13293B;
+    --ink:         #E3ECF5;
+    --ink-soft:    #A3B6C9;
+    --ink-faint:   #7A8EA3;
+    --line:        #1B3245;
+    --line-strong: #2A4762;
+    --azure:       #6BA6FF;
+    --azure-soft:  #12293F;
+    --ok:          #4FBE85;
+    --bad:         #F2836F;
+    --bronze:      #B06E33;
+    --prata:       #3D87C4;
+    --ouro:        #AE871B;
+    --shadow:      0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- alternância de idioma ------------------------------------------- */
+  :root:not([data-lang="en"]) .en { display: none; }
+  :root[data-lang="en"] .pt { display: none; }
+
+  /* --- estrutura -------------------------------------------------------- */
+  .wrap {
+    width: 100%;
+    max-width: 960px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  main section { padding-block: 56px; border-top: 1px solid var(--line); }
+  main section:first-of-type { border-top: 0; }
+
+  h1, h2, h3 { font-family: "IBM Plex Serif", Georgia, serif; text-wrap: balance; margin: 0; }
+  h2 { font-size: 1.6rem; font-weight: 600; letter-spacing: -.01em; }
+  h3 { font-size: 1.05rem; font-weight: 600; }
+  p  { margin: 0; max-width: var(--measure); }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+  }
+  .stack   { display: flex; flex-direction: column; gap: 16px; }
+  .stack-l { display: flex; flex-direction: column; gap: 28px; }
+
+  /* --- topo ------------------------------------------------------------- */
+  .topbar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding-block: 10px;
+  }
+  .back {
+    font-family: "IBM Plex Mono", monospace; font-size: .8rem;
+    color: var(--ink-soft); text-decoration: none;
+  }
+  .back:hover { color: var(--azure); }
+  .langs { display: flex; gap: 2px; border: 1px solid var(--line-strong); border-radius: 999px; padding: 2px; }
+  .langs button {
+    font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .06em;
+    border: 0; border-radius: 999px; padding: 4px 11px; cursor: pointer;
+    background: transparent; color: var(--ink-soft);
+  }
+  .langs button[aria-pressed="true"] { background: var(--azure); color: #fff; }
+  .langs button:focus-visible, .back:focus-visible, a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--azure); outline-offset: 2px;
+  }
+
+  /* --- herói ------------------------------------------------------------ */
+  .hero {
+    background: var(--deep);
+    color: var(--deep-ink);
+    border-bottom: 1px solid var(--deep-line);
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .hero .wrap {
+    padding-block: 64px 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+    gap: 16px 44px;
+    align-items: center;
+  }
+  .hero-text { grid-column: 1; }
+  .hero-figure { grid-column: 2; margin: 0; }
+  .hero-figure img {
+    display: block; width: 100%; height: auto; max-width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--deep-line);
+    box-shadow: 0 18px 50px -24px rgba(0, 0, 0, .9);
+  }
+  .hero-figure figcaption {
+    font-family: "IBM Plex Mono", monospace; font-size: .68rem; line-height: 1.5;
+    color: var(--deep-soft); margin-top: 10px;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 9vw, 4.2rem);
+    font-weight: 600; letter-spacing: -.025em; line-height: 1.02;
+    margin-bottom: 14px;
+  }
+  .hero .eyebrow { color: var(--deep-soft); }
+  .hero .lede { color: var(--deep-soft); font-size: 1.1rem; max-width: 56ch; }
+  .hero .lede strong { color: #fff; font-weight: 500; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 28px; }
+  .chip {
+    font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+    padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--deep-line); color: var(--deep-soft);
+  }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .9rem; font-weight: 500; text-decoration: none;
+    padding: 10px 17px; border-radius: 8px;
+    border: 1px solid var(--deep-line); color: var(--deep-ink);
+    transition: background-color .15s ease, border-color .15s ease;
+  }
+  .btn:hover { border-color: #3E7FD4; background: rgba(62, 127, 212, .12); }
+  .btn.primary { background: #2E6FC7; border-color: #2E6FC7; color: #fff; }
+  .btn.primary:hover { background: #3E7FD4; }
+
+  /* --- números ---------------------------------------------------------- */
+  .counts {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--deep-line);
+    margin-top: 40px;
+  }
+  .counts div { padding: 18px 14px 0 0; }
+  .counts b {
+    display: block;
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    font-size: 1.7rem; font-weight: 500; color: #fff; line-height: 1;
+  }
+  .counts span { font-size: .78rem; color: var(--deep-soft); }
+
+  /* --- linhagem --------------------------------------------------------- */
+  .lineage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+  .layer {
+    background: var(--surface); border: 1px solid var(--line);
+    border-top: 3px solid var(--tone); border-radius: var(--radius);
+    padding: 16px; box-shadow: var(--shadow);
+  }
+  .layer.bronze { --tone: var(--bronze); }
+  .layer.prata  { --tone: var(--prata); }
+  .layer.ouro   { --tone: var(--ouro); }
+  .layer h3 { color: var(--tone); font-size: .95rem; }
+  .layer .role { font-size: .82rem; color: var(--ink-soft); margin: 4px 0 14px; }
+  .layer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+  .layer li {
+    font-family: "IBM Plex Mono", monospace; font-size: .76rem;
+    color: var(--ink); background: var(--surface-alt);
+    border-radius: 5px; padding: 4px 8px;
+    overflow-wrap: anywhere;
+  }
+  .layer .mat {
+    font-family: "IBM Plex Mono", monospace; font-size: .68rem;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--ink-faint); margin-top: 14px; display: block;
+  }
+
+
+  /* --- placar do build --------------------------------------------------- */
+  .buildcard {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 26px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--ok); border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 18px 22px; margin-top: 4px;
+  }
+  .buildcard .score {
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    font-size: 2rem; font-weight: 500; line-height: 1; color: var(--ink);
+  }
+  .buildcard .state {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: .82rem; font-weight: 500; color: var(--ok);
+  }
+  .buildcard .state::before {
+    content: ""; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--ok); flex: none;
+  }
+  .buildcard.falhou { border-left-color: var(--bad); }
+  .buildcard.falhou .state { color: var(--bad); }
+  .buildcard.falhou .state::before { background: var(--bad); }
+  .buildcard .meta {
+    font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--ink-faint);
+    margin-left: auto; text-align: right;
+  }
+
+  /* --- gráficos de barras ------------------------------------------------ */
+  .charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 30px; }
+  .chart h3 {
+    font-family: "IBM Plex Sans", sans-serif; font-size: .82rem; font-weight: 600;
+    letter-spacing: .02em; color: var(--ink); margin-bottom: 2px;
+  }
+  .chart .sub { font-size: .76rem; color: var(--ink-faint); margin-bottom: 14px; }
+  .bars { display: flex; flex-direction: column; gap: 9px; }
+  .bar {
+    display: grid; grid-template-columns: 8.6rem minmax(0, 1fr) 2rem;
+    align-items: center; gap: 10px;
+  }
+  .bar .name {
+    font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--ink-soft);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .bar .track {
+    display: block; background: var(--surface-alt);
+    border-radius: 3px; height: 14px; overflow: hidden;
+  }
+  .bar .fill {
+    display: block; height: 100%; border-radius: 0 4px 4px 0;
+    background: var(--tone, var(--azure));
+    transition: filter .15s ease;
+  }
+  .bar:hover .fill { filter: saturate(1.25) brightness(1.06); }
+  .bar .val {
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    font-size: .78rem; color: var(--ink); text-align: right;
+  }
+  .bar.b-bronze { --tone: var(--bronze); }
+  .bar.b-prata  { --tone: var(--prata); }
+  .bar.b-ouro   { --tone: var(--ouro); }
+  .fonte {
+    font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+    color: var(--ink-faint); margin-top: 22px;
+  }
+
+  /* --- verificação ------------------------------------------------------- */
+  .verify { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 8px; }
+  .vcard {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .vcard .n {
+    font-family: "IBM Plex Mono", monospace; font-size: .7rem; letter-spacing: .12em;
+    color: var(--ink-faint);
+  }
+  .vcard p { font-size: .88rem; color: var(--ink-soft); }
+  .vcard a { color: var(--azure); font-size: .88rem; font-weight: 500; text-decoration: none; margin-top: auto; }
+  .vcard a:hover { text-decoration: underline; }
+  pre.cmd {
+    background: var(--deep); color: #CFE0F2; border-radius: var(--radius);
+    padding: 16px 18px; overflow-x: auto; margin: 22px 0 0;
+    font-family: "IBM Plex Mono", monospace; font-size: .78rem; line-height: 1.75;
+  }
+  pre.cmd .c { color: #7E97AF; }
+  .badge { height: 20px; vertical-align: middle; }
+
+  /* --- governança ------------------------------------------------------- */
+  .checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin-top: 4px; }
+  .check {
+    display: grid; grid-template-columns: 3.2rem 1fr; gap: 14px;
+    align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line);
+  }
+  .check b {
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    font-size: 1.15rem; font-weight: 500; color: var(--azure); text-align: right;
+  }
+  .check span { font-size: .88rem; color: var(--ink-soft); }
+  .check code { font-family: "IBM Plex Mono", monospace; font-size: .82em; color: var(--ink); }
+
+  .callout {
+    background: var(--azure-soft); border-left: 3px solid var(--azure);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 18px 20px; margin-top: 28px;
+  }
+  .callout p { max-width: none; font-size: .95rem; }
+  .callout .eyebrow { color: var(--azure); }
+
+  /* --- decisões --------------------------------------------------------- */
+  .decisions { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+  .decision {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .decision h3 { margin-bottom: 6px; }
+  .decision p { font-size: .93rem; color: var(--ink-soft); }
+  .decision code {
+    font-family: "IBM Plex Mono", monospace; font-size: .85em;
+    background: var(--surface-alt); border-radius: 4px; padding: 1px 5px; color: var(--ink);
+  }
+
+  /* --- rodapé ----------------------------------------------------------- */
+  footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
+  footer p { font-size: .85rem; color: var(--ink-faint); }
+  footer a { color: var(--azure); }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; font-size: .9rem; }
+  .foot-links a { text-decoration: none; }
+  .foot-links a:hover { text-decoration: underline; }
+
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; gap: 32px; }
+    .hero-text, .hero-figure { grid-column: 1; }
+    .hero-figure { order: 3; }
+  }
+
+  @media (max-width: 720px) {
+    .lineage { grid-template-columns: 1fr; }
+    .charts  { grid-template-columns: 1fr; }
+    .verify  { grid-template-columns: 1fr; }
+    .bar     { grid-template-columns: 7.6rem minmax(0, 1fr) 2rem; }
+    .buildcard .meta { margin-left: 0; text-align: left; width: 100%; }
+    .counts  { grid-template-columns: repeat(2, 1fr); }
+    .counts div { padding-right: 10px; }
+    main section { padding-block: 44px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+
+  /* --- Horas: gráficos e interação ------------------------------------ */
+  .figbox {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px 18px 12px; box-shadow: var(--shadow); margin-top: 8px;
+  }
+  .figbox h3 {
+    font-family: "IBM Plex Sans", sans-serif; font-size: .86rem; font-weight: 600;
+    letter-spacing: .01em; margin-bottom: 2px;
+  }
+  .figbox .sub { font-size: .78rem; color: var(--ink-faint); margin-bottom: 10px; max-width: none; }
+  .svgchart { width: 100%; display: block; }
+  .svgchart text { font-family: "IBM Plex Mono", monospace; font-size: 11px; fill: var(--ink-soft); }
+  .svgchart .lbl { fill: var(--ink); font-weight: 500; }
+  .svgchart .grid { stroke: var(--line); stroke-width: 1; }
+  .svgchart .axis { stroke: var(--line-strong); stroke-width: 1; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 8px; }
+  .legend span {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--ink-soft);
+  }
+  .legend i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .legend i.sq { border-radius: 2px; transform: rotate(45deg); width: 10px; height: 10px; }
+  .legend i.ln { height: 2px; border-radius: 0; width: 16px; }
+  .bar.b-bad { --tone: var(--bad); }
+
+  .control {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px;
+    align-items: center; margin: 4px 0 18px;
+  }
+  .control label { font-family: "IBM Plex Mono", monospace; font-size: .76rem; color: var(--ink-soft); }
+  .control output {
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    font-size: 1rem; color: var(--azure); font-weight: 500; min-width: 3.4ch; text-align: right;
+  }
+  input[type="range"] { width: 100%; accent-color: var(--azure); }
+  .readouts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+  .ro {
+    background: var(--surface-alt); border-radius: 8px; padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .ro .k { font-size: .72rem; color: var(--ink-soft); line-height: 1.35; }
+  .ro .v {
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    font-size: 1.25rem; font-weight: 500; color: var(--ink); line-height: 1.1;
+  }
+  .ro .d { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--ink-faint); }
+
+  .plan { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+  .plan .vcard h3 { font-size: .95rem; }
+  .plan .vcard p b { color: var(--ink); font-weight: 600; }
+  .plan .vcard.wide { grid-column: 1 / -1; }
+  .ok-txt { color: var(--ok); }
+  .bad-txt { color: var(--bad); }
+  ul.limits { margin: 4px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; max-width: var(--measure); }
+  ul.limits li { color: var(--ink-soft); font-size: .93rem; }
+  a.inline { color: var(--azure); }
+
+  @media (max-width: 720px) {
+    .readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .plan { grid-template-columns: 1fr; }
+    .control { grid-template-columns: 1fr auto; }
+    .control label { grid-column: 1 / -1; }
+    .figbox { padding: 14px 12px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="back" href="https://gabigattirodrigues.github.io">
+      <span class="pt">← portfólio</span><span class="en">← portfolio</span>
+    </a>
+    <div class="langs" role="group" aria-label="Idioma / Language">
+      <button id="lang-pt" type="button" aria-pressed="true">PT</button>
+      <button id="lang-en" type="button" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <p class="eyebrow">
+        <span class="pt">Projeto de portfólio · Logística e previsão</span>
+        <span class="en">Portfolio project · Logistics and forecasting</span>
+      </p>
+      <h1>Horas</h1>
+      <p class="lede">
+        <span class="pt">Quanto prometer de prazo de entrega. Uma promessa calibrada
+          <strong>pedido a pedido</strong>, testada fora da amostra em oito meses, que mantém a
+          pontualidade e tira a folga de onde ela sobra.</span>
+        <span class="en">How long a delivery promise should be. A promise calibrated
+          <strong>order by order</strong>, tested out of sample over eight months, that keeps
+          on-time performance and removes slack where there is too much of it.</span>
+      </p>
+
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">LightGBM</span>
+        <span class="chip"><span class="pt">Regressão quantílica</span><span class="en">Quantile regression</span></span>
+        <span class="chip"><span class="pt">Gráfico de controle</span><span class="en">Control chart</span></span>
+        <span class="chip"><span class="pt">Desenho de teste A/B</span><span class="en">A/B test design</span></span>
+      </div>
+
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/GabiGattiRodrigues/horas">
+          <span class="pt">Ver o repositório</span><span class="en">View the repository</span>
+        </a>
+        <a class="btn" href="https://nbviewer.org/github/GabiGattiRodrigues/horas/blob/main/horas_promessa_de_entrega.ipynb">
+          <span class="pt">Notebook da análise</span><span class="en">Analysis notebook</span>
+        </a>
+      </div>
+    </div>
+
+    <figure class="hero-figure">
+      <img src="horas.jpg" alt="Pintura de seis mulheres em túnicas coloridas dançando de mãos dadas num jardim" width="1024" height="683">
+      <figcaption>
+        <span class="pt"><em>Horae Serenae</em>, Edward John Poynter, exposta na Royal Academy em 1894.
+          As Horas eram as deusas gregas da ordem do tempo e das estações.</span>
+        <span class="en"><em>Horae Serenae</em>, Edward John Poynter, shown at the Royal Academy in 1894.
+          The Horae were the Greek goddesses of the order of time and the seasons.</span>
+      </figcaption>
+    </figure>
+
+    <div class="counts">
+      <div><b id="c-pedidos"></b><span class="pt">pedidos analisados</span><span class="en">orders analyzed</span></div>
+      <div><b id="c-noprazo"></b><span class="pt">entregues no prazo</span><span class="en">delivered on time</span></div>
+      <div><b id="c-folga"></b><span class="pt">de folga na mediana</span><span class="en">median slack</span></div>
+      <div><b id="c-disp"></b><span class="pt">menos diferença entre estados</span><span class="en">less gap between states</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">O problema</span><span class="en">The problem</span></p>
+      <h2>
+        <span class="pt">Prometer prazo é escolher entre dois erros</span>
+        <span class="en">Promising a delivery date means choosing between two mistakes</span>
+      </h2>
+      <p>
+        <span class="pt">Se a promessa é curta demais, o pedido atrasa, a avaliação cai e o
+          cliente liga no atendimento. Se é longa demais, o pedido chega cedo, mas o cliente viu
+          um prazo longo na hora de comprar e pode ter desistido.</span>
+        <span class="en">If the promise is too short, the order arrives late, the rating drops
+          and the customer calls support. If it is too long, the order arrives early, but the
+          customer saw a long lead time at checkout and may have walked away.</span>
+      </p>
+      <p>
+        <span class="pt">O primeiro erro aparece na base. O segundo não aparece, porque quem
+          desistiu nunca virou pedido. Este projeto mede o primeiro, encontra onde dá pra encurtar
+          sem cair no primeiro, e desenha o teste que mede o segundo.</span>
+        <span class="en">The first mistake shows up in the data. The second one doesn't, because
+          whoever gave up never became an order. This project measures the first, finds where the
+          promise can be shortened without falling into it, and designs the test that measures the
+          second.</span>
+      </p>
+      <p>
+        <span class="pt">Base pública da Olist, e-commerce brasileiro, com pedidos de 2016 a 2018,
+          data prometida, data entregue, UF do vendedor e do cliente e nota de avaliação.</span>
+        <span class="en">Public Olist dataset, a Brazilian e-commerce marketplace, with orders from
+          2016 to 2018, promised date, delivery date, seller and customer state, and review
+          score.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">Diagnóstico</span><span class="en">Diagnosis</span></p>
+      <h2>
+        <span class="pt">A mesma folga rende pontualidades bem diferentes</span>
+        <span class="en">The same slack yields very different on-time rates</span>
+      </h2>
+      <p>
+        <span class="pt">Na mediana, o pedido chega bem antes do prometido. Mas a cauda é longa e
+          muda de estado pra estado. SP tem entrega curta e atrasa pouco. RJ, BA e o Nordeste têm
+          folga parecida na mediana, só que a cauda passa do prazo com muito mais frequência.</span>
+        <span class="en">At the median, orders arrive well before the promised date. But the tail
+          is long and varies by state. São Paulo has short deliveries and few delays. Rio, Bahia and
+          the Northeast have similar median slack, yet their tail misses the date far more
+          often.</span>
+      </p>
+      <div class="figbox">
+        <h3><span class="pt">Folga mediana × % no prazo, por UF do cliente</span><span class="en">Median slack × % on time, by customer state</span></h3>
+        <p class="sub"><span class="pt">Tamanho do círculo = volume de pedidos. Estados com 300 pedidos ou mais.</span><span class="en">Circle size = order volume. States with 300+ orders.</span></p>
+        <div id="ch-uf"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">Quanto custa atrasar</span><span class="en">The cost of being late</span></p>
+      <h2>
+        <span class="pt">Atraso derruba a nota. Folga a mais não sobe a nota.</span>
+        <span class="en">Delays sink the rating. Extra slack doesn't lift it.</span>
+      </h2>
+      <p>
+        <span class="pt">Com oito dias ou mais de atraso, quase quatro em cada cinco avaliações são
+          1 ou 2. Do outro lado, chegar 8, 15 ou 22 dias antes dá praticamente a mesma nota. Essa
+          folga extra não compra satisfação. Ela só alonga o prazo que o cliente vê antes de
+          comprar.</span>
+        <span class="en">With eight or more days of delay, almost four in five reviews are 1 or 2
+          stars. On the other side, arriving 8, 15 or 22 days early gets practically the same
+          rating. That extra slack buys no satisfaction. It only lengthens the lead time the
+          customer sees before buying.</span>
+      </p>
+      <div class="figbox">
+        <h3><span class="pt">% de notas 1 e 2 por quanto o pedido chegou antes ou depois do prometido</span><span class="en">% of 1–2 star reviews by how early or late the order arrived</span></h3>
+        <p class="sub"><span class="pt">Passe o mouse pra ver o intervalo de confiança de Wilson (95%).</span><span class="en">Hover to see the Wilson confidence interval (95%).</span></p>
+        <div class="bars" id="ch-notas"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">Calibração</span><span class="en">Calibration</span></p>
+      <h2>
+        <span class="pt">No total, a promessa atual já é razoável</span>
+        <span class="en">Overall, the current promise is already reasonable</span>
+      </h2>
+      <p>
+        <span class="pt">Testei duas formas de definir a promessa, sempre aprendendo só com os seis
+          meses anteriores e aplicando no mês seguinte, de janeiro a agosto de 2018. A primeira
+          usa o percentil do prazo real em cada rota (UF do vendedor → UF do cliente). A segunda é
+          uma regressão quantílica que estima o percentil do prazo de cada pedido a partir da
+          distância, das UFs, do dia da compra, do frete, do peso e do histórico de manuseio do
+          vendedor.</span>
+        <span class="en">I tested two ways of setting the promise, always learning only from the
+          previous six months and applying it to the next month, from January to August 2018. The
+          first uses the percentile of actual lead time on each route (seller state → customer
+          state). The second is a quantile regression that estimates the lead-time percentile of
+          each order from distance, states, purchase weekday, freight, weight and the seller's
+          handling history.</span>
+      </p>
+      <p>
+        <span class="pt">O resultado honesto: no agregado o ganho é pequeno. O percentil por rota
+          empata com a Olist, e a regressão quantílica economiza cerca de um dia pra mesma taxa no
+          prazo.</span>
+        <span class="en">The honest result: in aggregate the gain is small. The route percentile
+          ties with Olist, and the quantile regression saves about one day at the same on-time
+          rate.</span>
+      </p>
+      <div class="figbox">
+        <h3><span class="pt">Curva de troca: dias prometidos × % no prazo</span><span class="en">Trade-off curve: promised days × % on time</span></h3>
+        <p class="sub"><span class="pt">Cada ponto é um percentil. Quanto mais pra esquerda e pra cima, melhor.</span><span class="en">Each point is a percentile. Further left and higher is better.</span></p>
+        <div id="ch-curva"></div>
+        <div class="legend" id="lg-curva"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">Onde está o ganho</span><span class="en">Where the gain is</span></p>
+      <h2>
+        <span class="pt">Tirar folga de quem tem sobra e dar pra quem atrasa</span>
+        <span class="en">Take slack from where it's spare and give it to where orders run late</span>
+      </h2>
+      <p>
+        <span class="pt">Abrindo por estado, a promessa calibrada encurta o prazo de SP e MG e
+          alonga o de RJ, BA e do Nordeste. A taxa geral fica parecida, mas a diferença de
+          pontualidade entre estados cai pela metade. Mexa no percentil pra ver a troca.</span>
+        <span class="en">By state, the calibrated promise shortens the lead time for São Paulo and
+          Minas Gerais and lengthens it for Rio, Bahia and the Northeast. The overall rate stays
+          similar, but the on-time gap between states is cut in half. Move the percentile to see
+          the trade-off.</span>
+      </p>
+      <div class="figbox">
+        <div class="control">
+          <label for="q"><span class="pt">Percentil da promessa calibrada</span><span class="en">Percentile of the calibrated promise</span></label>
+          <input type="range" id="q" min="0" max="5" step="1" value="3">
+          <output id="q-out" for="q">P92</output>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span class="k"><span class="pt">% no prazo geral</span><span class="en">Overall % on time</span></span><span class="v" id="r-ok"></span><span class="d" id="r-ok-d"></span></div>
+          <div class="ro"><span class="k"><span class="pt">Promessa média</span><span class="en">Average promise</span></span><span class="v" id="r-dias"></span><span class="d" id="r-dias-d"></span></div>
+          <div class="ro"><span class="k"><span class="pt">Diferença entre estados (desvio)</span><span class="en">Gap between states (std. dev.)</span></span><span class="v" id="r-sd"></span><span class="d" id="r-sd-d"></span></div>
+          <div class="ro"><span class="k"><span class="pt">Nota esperada</span><span class="en">Expected rating</span></span><span class="v" id="r-nota"></span><span class="d" id="r-nota-d"></span></div>
+        </div>
+        <h3><span class="pt">% no prazo por UF: promessa atual × calibrada</span><span class="en">% on time by state: current × calibrated promise</span></h3>
+        <p class="sub"><span class="pt">À direita, quantos dias a promessa mediana muda. Jan a ago/2018, UFs com 600+ pedidos.</span><span class="en">On the right, how many days the median promise changes. Jan–Aug 2018, states with 600+ orders.</span></p>
+        <div id="ch-uf2"></div>
+        <div class="legend">
+          <span><i style="background:var(--ink-faint)"></i><span class="pt">Promessa atual</span><span class="en">Current promise</span></span>
+          <span><i style="background:var(--azure)"></i><span class="pt">Promessa calibrada</span><span class="en">Calibrated promise</span></span>
+        </div>
+      </div>
+      <p class="fonte">
+        <span class="pt">Nota esperada: simulação que aplica a nota média de cada faixa de folga à folga que cada política geraria. Mostra o sentido, não é efeito causal medido.</span>
+        <span class="en">Expected rating: a simulation applying the average rating of each slack band to the slack each policy would produce. It shows direction, not a measured causal effect.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">Monitoramento</span><span class="en">Monitoring</span></p>
+      <h2>
+        <span class="pt">Nenhuma calibração antecipa um choque</span>
+        <span class="en">No calibration sees a shock coming</span>
+      </h2>
+      <p>
+        <span class="pt">O gráfico de controle marca as semanas em que o % no prazo caiu abaixo da
+          variação normal. A maioria está na Black Friday de 2017 e entre fevereiro e março de
+          2018. A semana de 14 de maio de 2018 provavelmente pegou a greve dos caminhoneiros com o
+          pedido ainda em trânsito. Quando uma semana sai do limite, a promessa daquele período
+          tem que ser revista, sem esperar a recalibração do mês.</span>
+        <span class="en">The control chart flags the weeks where the on-time rate fell below normal
+          variation. Most are in Black Friday 2017 and between February and March 2018. The week
+          of May 14, 2018 probably caught the Brazilian truckers' strike with orders still in
+          transit. When a week falls out of bounds, that period's promise needs review without
+          waiting for the monthly recalibration.</span>
+      </p>
+      <div class="figbox">
+        <h3><span class="pt">% no prazo por semana de compra (gráfico p, limites de 3σ)</span><span class="en">% on time by purchase week (p-chart, 3σ limits)</span></h3>
+        <p class="sub"><span class="pt">Semanas com 300 pedidos ou mais.</span><span class="en">Weeks with 300+ orders.</span></p>
+        <div id="ch-p"></div>
+        <div class="legend" id="lg-p"></div>
+      </div>
+      <div class="callout">
+        <p class="eyebrow"><span class="pt">Próximo passo</span><span class="en">Next step</span></p>
+        <p>
+          <span class="pt">Esse monitoramento vai virar o <strong>Vulcão</strong>, agente de
+            logística do <a class="inline" href="https://dashboardinteligente.streamlit.app">Dashboard Inteligente</a>,
+            que avisa quando a semana sai do controle e qual região puxou a queda.</span>
+          <span class="en">This monitoring will become <strong>Vulcão</strong>, the logistics agent
+            in the <a class="inline" href="https://dashboardinteligente.streamlit.app">Intelligent Dashboard</a>,
+            which flags when a week goes out of control and which region drove the drop.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">O que a base não responde</span><span class="en">What the data can't answer</span></p>
+      <h2>
+        <span class="pt">Impacto do prazo prometido na conversão</span>
+        <span class="en">Impact of the promised lead time on conversion</span>
+      </h2>
+      <p>
+        <span class="pt">A base só tem pedido fechado. Não tem sessão, carrinho nem desistência,
+          então não dá pra estimar quanto de venda se ganha prometendo menos. Por isso a
+          recomendação de encurtar começa com um teste, e não com uma estimativa de receita.</span>
+        <span class="en">The data only has completed orders. There are no sessions, carts or
+          drop-offs, so there is no way to estimate how much revenue a shorter promise brings. That
+          is why the recommendation to shorten starts with a test rather than a revenue
+          estimate.</span>
+      </p>
+      <p>
+        <span class="pt">O que a análise já entrega pro teste: onde encurtar, quanto encurtar e qual
+          piso de pontualidade não pode ser furado.</span>
+        <span class="en">What the analysis already provides for the test: where to shorten, by how
+          much, and which on-time floor must not be breached.</span>
+      </p>
+      <div class="plan">
+        <div class="vcard">
+          <span class="n"><span class="pt">HIPÓTESE</span><span class="en">HYPOTHESIS</span></span>
+          <h3><span class="pt">Prometer menos converte mais</span><span class="en">A shorter promise converts better</span></h3>
+          <p><span class="pt">Mostrar <b>2 dias a menos</b> de prazo em SP e MG aumenta a conversão sem derrubar o % no prazo. Os dois estados somam <b id="p-share"></b> dos pedidos.</span><span class="en">Showing <b>2 fewer days</b> of lead time in SP and MG increases conversion without hurting the on-time rate. Both states account for <b id="p-share-en"></b> of orders.</span></p>
+        </div>
+        <div class="vcard">
+          <span class="n"><span class="pt">BRAÇOS</span><span class="en">ARMS</span></span>
+          <h3><span class="pt">Promessa atual × calibrada</span><span class="en">Current × calibrated promise</span></h3>
+          <p><span class="pt">Controle vê a promessa de hoje. Tratamento vê a promessa calibrada no P92. A divisão é por cliente, pra mesma pessoa não ver dois prazos.</span><span class="en">Control sees today's promise. Treatment sees the promise calibrated at P92. Split by customer, so the same person never sees two lead times.</span></p>
+        </div>
+        <div class="vcard">
+          <span class="n"><span class="pt">MÉTRICA PRINCIPAL</span><span class="en">PRIMARY METRIC</span></span>
+          <h3><span class="pt">Conversão de quem calculou o frete</span><span class="en">Conversion after shipping quote</span></h3>
+          <p><span class="pt">Sessões que informaram o CEP e viram o prazo, divididas pelas que viraram pedido. É o momento em que a promessa pesa na decisão.</span><span class="en">Sessions that entered a ZIP code and saw the lead time, over those that became an order. That's the moment the promise weighs on the decision.</span></p>
+        </div>
+        <div class="vcard">
+          <span class="n">GUARDRAILS</span>
+          <h3><span class="pt">O que não pode piorar</span><span class="en">What must not get worse</span></h3>
+          <p><span class="pt">% no prazo de pelo menos <b>90% por UF</b>, % de notas 1 e 2 e contatos no atendimento por atraso. Se a semana do tratamento sair do limite do gráfico de controle, o teste pausa.</span><span class="en">On-time rate of at least <b>90% per state</b>, share of 1–2 star reviews, and delay-related support contacts. If the treatment's week falls outside the control chart limit, the test pauses.</span></p>
+        </div>
+        <div class="vcard wide">
+          <span class="n"><span class="pt">AMOSTRA E LEITURA</span><span class="en">SAMPLE AND READOUT</span></span>
+          <h3><span class="pt">Desenho no DaVinci, leitura no Michelangelo</span><span class="en">Design in DaVinci, readout in Michelangelo</span></h3>
+          <p><span class="pt">O tamanho de amostra e a duração saem da conversão de base da loja e do menor ganho que vale a pena, calculados no DaVinci. A leitura do resultado é bayesiana, no Michelangelo: chance de o tratamento converter mais e quanto se ganha.</span><span class="en">Sample size and duration come from the store's baseline conversion and the smallest gain worth detecting, calculated in DaVinci. The readout is Bayesian, in Michelangelo: the probability that treatment converts better and by how much.</span></p>
+          <a href="https://testeabdesenho.streamlit.app"><span class="pt">Abrir o DaVinci ↗</span><span class="en">Open DaVinci ↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">Decisões de projeto</span><span class="en">Design decisions</span></p>
+      <h2>
+        <span class="pt">As escolhas que mudam o número</span>
+        <span class="en">The choices that change the number</span>
+      </h2>
+      <div class="decisions">
+        <div class="decision">
+          <h3><span class="pt">Pedido em aberto conta como atraso</span><span class="en">Open orders count as late</span></h3>
+          <p><span class="pt">1.729 pedidos ficaram sem data de entrega até o fim da base, e todos já tinham passado do prazo. Tirar esses pedidos deixaria a pontualidade melhor do que é.</span><span class="en">1,729 orders had no delivery date by the end of the data, and all of them were already past due. Dropping them would make on-time performance look better than it is.</span></p>
+        </div>
+        <div class="decision">
+          <h3><span class="pt">Backtest com janela móvel</span><span class="en">Rolling-window backtest</span></h3>
+          <p><span class="pt">O modelo de cada mês só vê os seis meses anteriores. É como ele funcionaria de verdade, recalibrado todo mês, e evita que o teste conheça o futuro.</span><span class="en">Each month's model only sees the previous six months. That's how it would run in production, recalibrated monthly, and it keeps the test from seeing the future.</span></p>
+        </div>
+        <div class="decision">
+          <h3><span class="pt">Regressão quantílica em vez da média</span><span class="en">Quantile regression instead of the mean</span></h3>
+          <p><span class="pt">Prometer a média erra metade das vezes. A promessa precisa cobrir a cauda, então o modelo estima direto o percentil do prazo de cada pedido.</span><span class="en">Promising the mean misses half the time. The promise has to cover the tail, so the model estimates the lead-time percentile of each order directly.</span></p>
+        </div>
+        <div class="decision">
+          <h3><span class="pt">P92 como ponto de partida</span><span class="en">P92 as the starting point</span></h3>
+          <p><span class="pt">É o percentil que empata com a pontualidade atual. Assim a comparação fica justa: mesma taxa no prazo, promessa distribuída de outro jeito.</span><span class="en">It's the percentile that matches the current on-time rate. That keeps the comparison fair: same on-time rate, promise distributed differently.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stack">
+      <p class="eyebrow"><span class="pt">Limitações</span><span class="en">Limitations</span></p>
+      <h2>
+        <span class="pt">O que este projeto não afirma</span>
+        <span class="en">What this project does not claim</span>
+      </h2>
+      <ul class="limits">
+        <li><span class="pt">O ganho de conversão com promessa mais curta é hipótese até o teste medir.</span><span class="en">The conversion gain from a shorter promise is a hypothesis until the test measures it.</span></li>
+        <li><span class="pt">A relação entre folga e nota é observacional. A nota esperada mostra o sentido, não o tamanho exato do efeito.</span><span class="en">The slack–rating relationship is observational. The expected rating shows direction, not the exact effect size.</span></li>
+        <li><span class="pt">A política de estimativa da Olist muda ao longo do tempo, então a comparação é sempre com a promessa que existia em cada mês.</span><span class="en">Olist's estimation policy changes over time, so the comparison is always against the promise in place each month.</span></li>
+        <li><span class="pt">Pedidos de agosto de 2018 têm menos tempo de observação até o corte da base.</span><span class="en">August 2018 orders have less observation time before the data cut-off.</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot-links">
+    <a href="https://github.com/GabiGattiRodrigues/horas">GitHub</a>
+    <a href="https://dashboardinteligente.streamlit.app">Dashboard Inteligente</a>
+    <a href="https://testeabdesenho.streamlit.app">DaVinci</a>
+    <a href="https://testeabmensuracao.streamlit.app">Michelangelo</a>
+    <a href="https://www.linkedin.com/in/gabriela-gatti-rodrigues">LinkedIn</a>
+  </div>
+  <p>
+    <span class="pt">Gabriela Gatti Rodrigues · Dados públicos da Olist (CC BY-NC-SA 4.0).
+      Os CSVs não são versionados no repositório. Pintura em domínio público.</span>
+    <span class="en">Gabriela Gatti Rodrigues · Public Olist dataset (CC BY-NC-SA 4.0).
+      The CSVs are not versioned in the repository. Painting in the public domain.</span>
+  </p>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var pt = document.getElementById('lang-pt');
+    var en = document.getElementById('lang-en');
+
+    function set(lang) {
+      root.setAttribute('data-lang', lang);
+      root.setAttribute('lang', lang === 'en' ? 'en' : 'pt-BR');
+      pt.setAttribute('aria-pressed', String(lang !== 'en'));
+      en.setAttribute('aria-pressed', String(lang === 'en'));
+      try { localStorage.setItem('horas-lang', lang); } catch (e) {}
+      document.dispatchEvent(new Event('horas-lang'));
+    }
+
+    var saved = null;
+    var pedido = new URLSearchParams(location.search).get('lang');
+    if (pedido === 'en' || pedido === 'pt') saved = pedido;
+    if (!saved) { try { saved = localStorage.getItem('horas-lang'); } catch (e) {} }
+    if (!saved) {
+      saved = (navigator.language || '').toLowerCase().indexOf('pt') === 0 ? 'pt' : 'en';
+    }
+    set(saved);
+
+    pt.addEventListener('click', function () { set('pt'); });
+    en.addEventListener('click', function () { set('en'); });
+  })();
+</script>
+
+<script>
+  /*
+    Todos os números desta página vêm do notebook (horas_promessa_de_entrega.ipynb),
+    exportados por scripts/exportar_pagina.py, que reescreve o bloco entre DADOS-INICIO e
+    DADOS-FIM. Nenhum número é digitado à mão.
+  */
+  (function () {
+    var D = /*DADOS-INICIO*/{"resumo":{"pedidos":98199,"no_prazo":0.9158545402702675,"prometido":24.0,"real":10.0,"folga":12.0,"p95":29.0},"por_uf":[{"customer_state":"AL","pedidos":411,"no_prazo":0.759,"folga_mediana":10.0,"prometido_mediana":32.0,"real_mediana":22.0},{"customer_state":"MA","pedidos":736,"no_prazo":0.804,"folga_mediana":12.0,"prometido_mediana":31.0,"real_mediana":19.0},{"customer_state":"SE","pedidos":345,"no_prazo":0.823,"folga_mediana":12.0,"prometido_mediana":30.0,"real_mediana":18.0},{"customer_state":"CE","pedidos":1323,"no_prazo":0.834,"folga_mediana":14.0,"prometido_mediana":32.0,"real_mediana":18.0},{"customer_state":"PI","pedidos":490,"no_prazo":0.837,"folga_mediana":14.0,"prometido_mediana":30.0,"real_mediana":16.0},{"customer_state":"RJ","pedidos":12697,"no_prazo":0.855,"folga_mediana":13.0,"prometido_mediana":25.0,"real_mediana":12.0},{"customer_state":"BA","pedidos":3344,"no_prazo":0.855,"folga_mediana":13.0,"prometido_mediana":30.0,"real_mediana":17.0},{"customer_state":"PA","pedidos":969,"no_prazo":0.867,"folga_mediana":16.0,"prometido_mediana":37.0,"real_mediana":21.0},{"customer_state":"PB","pedidos":531,"no_prazo":0.872,"folga_mediana":15.0,"prometido_mediana":33.0,"real_mediana":18.0},{"customer_state":"PE","pedidos":1643,"no_prazo":0.876,"folga_mediana":16.0,"prometido_mediana":32.0,"real_mediana":16.0},{"customer_state":"ES","pedidos":2018,"no_prazo":0.883,"folga_mediana":12.0,"prometido_mediana":26.0,"real_mediana":14.0},{"customer_state":"RN","pedidos":482,"no_prazo":0.892,"folga_mediana":16.5,"prometido_mediana":32.5,"real_mediana":16.0},{"customer_state":"MS","pedidos":708,"no_prazo":0.894,"folga_mediana":12.0,"prometido_mediana":26.0,"real_mediana":14.0},{"customer_state":"SC","pedidos":3599,"no_prazo":0.904,"folga_mediana":13.0,"prometido_mediana":26.0,"real_mediana":13.0},{"customer_state":"GO","pedidos":1998,"no_prazo":0.915,"folga_mediana":13.0,"prometido_mediana":27.0,"real_mediana":14.0},{"customer_state":"MT","pedidos":902,"no_prazo":0.924,"folga_mediana":16.0,"prometido_mediana":32.0,"real_mediana":16.0},{"customer_state":"DF","pedidos":2120,"no_prazo":0.925,"folga_mediana":14.0,"prometido_mediana":25.0,"real_mediana":11.0},{"customer_state":"RS","pedidos":5415,"no_prazo":0.927,"folga_mediana":16.0,"prometido_mediana":29.0,"real_mediana":13.0},{"customer_state":"SP","pedidos":41125,"no_prazo":0.94,"folga_mediana":12.0,"prometido_mediana":19.0,"real_mediana":7.0},{"customer_state":"MG","pedidos":11496,"no_prazo":0.943,"folga_mediana":14.0,"prometido_mediana":24.0,"real_mediana":10.0},{"customer_state":"PR","pedidos":4982,"no_prazo":0.948,"folga_mediana":15.0,"prometido_mediana":25.0,"real_mediana":10.0}],"notas":[{"faixa":"8+ dias atrasado","pedidos":2781,"nota_media":1.696,"notas_ruins":2205,"pct_nota_1_2":0.793,"ic_inf":0.777,"ic_sup":0.808},{"faixa":"4 a 7 atrasado","pedidos":1748,"nota_media":2.103,"notas_ruins":1183,"pct_nota_1_2":0.677,"ic_inf":0.654,"ic_sup":0.698},{"faixa":"1 a 3 atrasado","pedidos":1852,"nota_media":3.291,"notas_ruins":595,"pct_nota_1_2":0.321,"ic_inf":0.3,"ic_sup":0.343},{"faixa":"no dia","pedidos":1280,"nota_media":4.034,"notas_ruins":159,"pct_nota_1_2":0.124,"ic_inf":0.107,"ic_sup":0.143},{"faixa":"1 a 3 antes","pedidos":4705,"nota_media":4.133,"notas_ruins":528,"pct_nota_1_2":0.112,"ic_inf":0.104,"ic_sup":0.122},{"faixa":"4 a 7 antes","pedidos":12529,"nota_media":4.226,"notas_ruins":1237,"pct_nota_1_2":0.099,"ic_inf":0.094,"ic_sup":0.104},{"faixa":"8 a 14 antes","pedidos":36158,"nota_media":4.311,"notas_ruins":3220,"pct_nota_1_2":0.089,"ic_inf":0.086,"ic_sup":0.092},{"faixa":"15 a 21 antes","pedidos":24165,"nota_media":4.341,"notas_ruins":2036,"pct_nota_1_2":0.084,"ic_inf":0.081,"ic_sup":0.088},{"faixa":"22+ antes","pedidos":10606,"nota_media":4.282,"notas_ruins":1109,"pct_nota_1_2":0.105,"ic_inf":0.099,"ic_sup":0.111}],"semanas":[{"dia_compra":"2017-01-23","pedidos":350,"taxa":0.9228571428571428,"lic":0.871194267422225,"lsc":0.9602820842757334,"fora":false},{"dia_compra":"2017-01-30","pedidos":449,"taxa":0.9309576837416481,"lic":0.8764104193316583,"lsc":0.9550659323663001,"fora":false},{"dia_compra":"2017-02-06","pedidos":529,"taxa":0.941398865784499,"lic":0.879505992370556,"lsc":0.9519703593274024,"fora":false},{"dia_compra":"2017-02-13","pedidos":393,"taxa":0.9491094147582697,"lic":0.8737017224369675,"lsc":0.9577746292609909,"fora":false},{"dia_compra":"2017-02-20","pedidos":369,"taxa":0.9051490514905149,"lic":0.8723562168186254,"lsc":0.959120134879333,"fora":false},{"dia_compra":"2017-02-27","pedidos":477,"taxa":0.9182389937106918,"lic":0.8775821483220334,"lsc":0.953894203375925,"fora":false},{"dia_compra":"2017-03-06","pedidos":566,"taxa":0.9363957597173145,"lic":0.8807102737381982,"lsc":0.9507660779597602,"fora":false},{"dia_compra":"2017-03-13","pedidos":609,"taxa":0.9211822660098522,"lic":0.881969526017299,"lsc":0.9495068256806594,"fora":false},{"dia_compra":"2017-03-20","pedidos":635,"taxa":0.9307086614173228,"lic":0.8826680779709446,"lsc":0.9488082737270138,"fora":false},{"dia_compra":"2017-03-27","pedidos":558,"taxa":0.9390681003584229,"lic":0.8804600712573656,"lsc":0.9510162804405928,"fora":false},{"dia_compra":"2017-04-03","pedidos":580,"taxa":0.9103448275862069,"lic":0.8811356066231636,"lsc":0.9503407450747948,"fora":false},{"dia_compra":"2017-04-10","pedidos":437,"taxa":0.897025171624714,"lic":0.875874106978613,"lsc":0.9556022447193454,"fora":false},{"dia_compra":"2017-04-17","pedidos":563,"taxa":0.8863232682060391,"lic":0.880617072947002,"lsc":0.9508592787509564,"fora":false},{"dia_compra":"2017-04-24","pedidos":665,"taxa":0.9112781954887218,"lic":0.8834226281982939,"lsc":0.9480537234996645,"fora":false},{"dia_compra":"2017-05-01","pedidos":777,"taxa":0.9356499356499357,"lic":0.8858422619854642,"lsc":0.9456340897124942,"fora":false},{"dia_compra":"2017-05-08","pedidos":779,"taxa":0.9255455712451861,"lic":0.8858806639459054,"lsc":0.945595687752053,"fora":false},{"dia_compra":"2017-05-15","pedidos":932,"taxa":0.9613733905579399,"lic":0.8884412093485725,"lsc":0.9430351423493859,"fora":false},{"dia_compra":"2017-05-22","pedidos":772,"taxa":0.9546632124352331,"lic":0.8857456050444258,"lsc":0.9457307466535326,"fora":false},{"dia_compra":"2017-05-29","pedidos":820,"taxa":0.9524390243902439,"lic":0.8866366730322846,"lsc":0.9448396786656739,"fora":false},{"dia_compra":"2017-06-05","pedidos":834,"taxa":0.9544364508393285,"lic":0.8868819640054009,"lsc":0.9445943876925575,"fora":false},{"dia_compra":"2017-06-12","pedidos":741,"taxa":0.9406207827260459,"lic":0.8851246579287105,"lsc":0.9463516937692479,"fora":false},{"dia_compra":"2017-06-19","pedidos":655,"taxa":0.9358778625954198,"lic":0.8831768790493102,"lsc":0.9482994726486482,"fora":false},{"dia_compra":"2017-06-26","pedidos":719,"taxa":0.9554937413073713,"lic":0.8846598298266692,"lsc":0.9468165218712892,"fora":false},{"dia_compra":"2017-07-03","pedidos":813,"taxa":0.9544895448954489,"lic":0.8865116583299079,"lsc":0.9449646933680506,"fora":false},{"dia_compra":"2017-07-10","pedidos":942,"taxa":0.9511677282377919,"lic":0.8885864842836714,"lsc":0.942889867414287,"fora":false},{"dia_compra":"2017-07-17","pedidos":948,"taxa":0.959915611814346,"lic":0.8886725437444214,"lsc":0.942803807953537,"fora":false},{"dia_compra":"2017-07-24","pedidos":914,"taxa":0.9485776805251641,"lic":0.8881737313225178,"lsc":0.9433026203754407,"fora":false},{"dia_compra":"2017-07-31","pedidos":970,"taxa":0.954639175257732,"lic":0.8889812339368214,"lsc":0.942495117761137,"fora":false},{"dia_compra":"2017-08-07","pedidos":921,"taxa":0.9609120521172638,"lic":0.8882786819955186,"lsc":0.9431976697024398,"fora":false},{"dia_compra":"2017-08-14","pedidos":1028,"taxa":0.9552529182879378,"lic":0.8897470084949722,"lsc":0.9417293432029862,"fora":false},{"dia_compra":"2017-08-21","pedidos":882,"taxa":0.9501133786848073,"lic":0.8876781510584969,"lsc":0.9437982006394615,"fora":false},{"dia_compra":"2017-08-28","pedidos":1001,"taxa":0.9470529470529471,"lic":0.8893988106304369,"lsc":0.9420775410675215,"fora":false},{"dia_compra":"2017-09-04","pedidos":892,"taxa":0.9439461883408071,"lic":0.8878358815085983,"lsc":0.9436404701893601,"fora":false},{"dia_compra":"2017-09-11","pedidos":1150,"taxa":0.922608695652174,"lic":0.8911643134129987,"lsc":0.9403120382849597,"fora":false},{"dia_compra":"2017-09-18","pedidos":978,"taxa":0.934560327198364,"lic":0.8890908939962475,"lsc":0.9423854577017109,"fora":false},{"dia_compra":"2017-09-25","pedidos":948,"taxa":0.9525316455696202,"lic":0.8886725437444214,"lsc":0.942803807953537,"fora":false},{"dia_compra":"2017-10-02","pedidos":987,"taxa":0.961499493414387,"lic":0.8892126643905439,"lsc":0.9422636873074145,"fora":false},{"dia_compra":"2017-10-09","pedidos":1047,"taxa":0.9379178605539638,"lic":0.8899839202168119,"lsc":0.9414924314811465,"fora":false},{"dia_compra":"2017-10-16","pedidos":1125,"taxa":0.9377777777777778,"lic":0.8908927707781396,"lsc":0.9405835809198189,"fora":false},{"dia_compra":"2017-10-23","pedidos":962,"taxa":0.946985446985447,"lic":0.8888702088046824,"lsc":0.942606142893276,"fora":false},{"dia_compra":"2017-10-30","pedidos":917,"taxa":0.9389312977099237,"lic":0.8882188573192609,"lsc":0.9432574943786975,"fora":false},{"dia_compra":"2017-11-06","pedidos":1191,"taxa":0.9319899244332494,"lic":0.8915909934732156,"lsc":0.9398853582247428,"fora":false},{"dia_compra":"2017-11-13","pedidos":1283,"taxa":0.8994544037412315,"lic":0.8924728566846292,"lsc":0.9390034950133292,"fora":false},{"dia_compra":"2017-11-20","pedidos":2972,"taxa":0.8115746971736204,"lic":0.9004520320617821,"lsc":0.9310243196361763,"fora":true},{"dia_compra":"2017-11-27","pedidos":2077,"taxa":0.8415984593163216,"lic":0.8974527914463482,"lsc":0.9340235602516103,"fora":true},{"dia_compra":"2017-12-04","pedidos":1661,"taxa":0.8801926550270921,"lic":0.8952908025060275,"lsc":0.9361855491919309,"fora":true},{"dia_compra":"2017-12-11","pedidos":1396,"taxa":0.9240687679083095,"lic":0.8934343362159639,"lsc":0.9380420154819945,"fora":false},{"dia_compra":"2017-12-18","pedidos":970,"taxa":0.9216494845360824,"lic":0.8889812339368214,"lsc":0.942495117761137,"fora":false},{"dia_compra":"2017-12-25","pedidos":872,"taxa":0.9495412844036697,"lic":0.8875177150752841,"lsc":0.9439586366226743,"fora":false},{"dia_compra":"2018-01-01","pedidos":1371,"taxa":0.9452954048140044,"lic":0.8932319011379514,"lsc":0.938244450560007,"fora":false},{"dia_compra":"2018-01-08","pedidos":1771,"taxa":0.9424054206662902,"lic":0.8959359931832654,"lsc":0.935540358514693,"fora":false},{"dia_compra":"2018-01-15","pedidos":1734,"taxa":0.9158016147635525,"lic":0.8957258393671378,"lsc":0.9357505123308206,"fora":false},{"dia_compra":"2018-01-22","pedidos":1566,"taxa":0.9137931034482759,"lic":0.8946797228349644,"lsc":0.936796628862994,"fora":false},{"dia_compra":"2018-01-29","pedidos":1571,"taxa":0.9293443666454487,"lic":0.8947132607651729,"lsc":0.9367630909327855,"fora":false},{"dia_compra":"2018-02-05","pedidos":1552,"taxa":0.907860824742268,"lic":0.8945849559331693,"lsc":0.9368913957647891,"fora":false},{"dia_compra":"2018-02-12","pedidos":1611,"taxa":0.8628181253879578,"lic":0.8949759183612322,"lsc":0.9365004333367262,"fora":true},{"dia_compra":"2018-02-19","pedidos":1735,"taxa":0.7994236311239193,"lic":0.8957316074423353,"lsc":0.9357447442556232,"fora":true},{"dia_compra":"2018-02-26","pedidos":1881,"taxa":0.7240829346092504,"lic":0.8965237263990485,"lsc":0.9349526252989099,"fora":true},{"dia_compra":"2018-03-05","pedidos":1633,"taxa":0.736068585425597,"lic":0.8951162485913571,"lsc":0.9363601031066013,"fora":true},{"dia_compra":"2018-03-12","pedidos":1589,"taxa":0.7652611705475142,"lic":0.8948326837795916,"lsc":0.9366436679183668,"fora":true},{"dia_compra":"2018-03-19","pedidos":1708,"taxa":0.8624121779859485,"lic":0.8955740959436501,"lsc":0.9359022557543083,"fora":true},{"dia_compra":"2018-03-26","pedidos":1464,"taxa":0.8688524590163934,"lic":0.8939584803009102,"lsc":0.9375178713970482,"fora":true},{"dia_compra":"2018-04-02","pedidos":1586,"taxa":0.912358133669609,"lic":0.8948129212176842,"lsc":0.9366634304802742,"fora":false},{"dia_compra":"2018-04-09","pedidos":1551,"taxa":0.9464861379754996,"lic":0.8945781378121491,"lsc":0.9368982138858093,"fora":false},{"dia_compra":"2018-04-16","pedidos":1665,"taxa":0.9471471471471471,"lic":0.895315378684792,"lsc":0.9361609730131664,"fora":false},{"dia_compra":"2018-04-23","pedidos":1670,"taxa":0.9491017964071856,"lic":0.89534597465278,"lsc":0.9361303770451784,"fora":false},{"dia_compra":"2018-04-30","pedidos":1762,"taxa":0.9472190692395006,"lic":0.8958854844873632,"lsc":0.9355908672105953,"fora":false},{"dia_compra":"2018-05-07","pedidos":1971,"taxa":0.9223744292237442,"lic":0.8969675379963068,"lsc":0.9345088137016516,"fora":false},{"dia_compra":"2018-05-14","pedidos":1830,"taxa":0.8666666666666667,"lic":0.8962578239390865,"lsc":0.9352185277588719,"fora":true},{"dia_compra":"2018-05-21","pedidos":946,"taxa":0.9545454545454546,"lic":0.8886439482455798,"lsc":0.9428324034523786,"fora":false},{"dia_compra":"2018-05-28","pedidos":1081,"taxa":0.9907493061979649,"lic":0.890392172029868,"lsc":0.9410841796680904,"fora":false},{"dia_compra":"2018-06-04","pedidos":1433,"taxa":0.9790648988136776,"lic":0.8937241613716164,"lsc":0.937752190326342,"fora":false},{"dia_compra":"2018-06-11","pedidos":1512,"taxa":0.9728835978835979,"lic":0.8943069779148588,"lsc":0.9371693737830996,"fora":false},{"dia_compra":"2018-06-18","pedidos":1451,"taxa":0.9841488628532047,"lic":0.8938611320275399,"lsc":0.9376152196704185,"fora":false},{"dia_compra":"2018-06-25","pedidos":1393,"taxa":0.9820531227566404,"lic":0.8934103320766763,"lsc":0.9380660196212821,"fora":false},{"dia_compra":"2018-07-02","pedidos":1188,"taxa":0.9772727272727273,"lic":0.8915605238303367,"lsc":0.9399158278676217,"fora":false},{"dia_compra":"2018-07-09","pedidos":988,"taxa":0.9311740890688259,"lic":0.8892260916308163,"lsc":0.9422502600671421,"fora":false},{"dia_compra":"2018-07-16","pedidos":1666,"taxa":0.9603841536614646,"lic":0.8953215088956953,"lsc":0.9361548428022631,"fora":false},{"dia_compra":"2018-07-23","pedidos":1634,"taxa":0.9583843329253366,"lic":0.8951225598163733,"lsc":0.9363537918815851,"fora":false},{"dia_compra":"2018-07-30","pedidos":2030,"taxa":0.8955665024630541,"lic":0.897242324599675,"lsc":0.9342340270982834,"fora":true},{"dia_compra":"2018-08-06","pedidos":1961,"taxa":0.9005609382967874,"lic":0.8969197389939035,"lsc":0.9345566127040549,"fora":false},{"dia_compra":"2018-08-13","pedidos":1852,"taxa":0.9568034557235421,"lic":0.896373873642781,"lsc":0.9351024780551774,"fora":false},{"dia_compra":"2018-08-20","pedidos":1058,"taxa":0.9744801512287334,"lic":0.890118153214191,"lsc":0.9413581984837674,"fora":false}],"p_barra":0.9157381758489792,"curva":[{"metodo":"rota","q":0.8,"no_prazo":0.8378292546235756,"dias":18.248402764804784},{"metodo":"rota","q":0.85,"no_prazo":0.8751914814122922,"dias":20.39433962264151},{"metodo":"rota","q":0.9,"no_prazo":0.9100878012329535,"dias":23.359518027274426},{"metodo":"rota","q":0.93,"no_prazo":0.9315337194096768,"dias":25.981729871100317},{"metodo":"rota","q":0.95,"no_prazo":0.9459742200635158,"dias":28.50590323183262},{"metodo":"rota","q":0.97,"no_prazo":0.9615355875210162,"dias":32.54085559499346},{"metodo":"quantilica","q":0.85,"no_prazo":0.8639080889220998,"dias":19.084419951429105},{"metodo":"quantilica","q":0.88,"no_prazo":0.884251821408556,"dias":20.38864188305623},{"metodo":"quantilica","q":0.9,"no_prazo":0.8988791331963385,"dias":21.456940033626005},{"metodo":"quantilica","q":0.92,"no_prazo":0.9131888660564169,"dias":22.80681860638894},{"metodo":"quantilica","q":0.94,"no_prazo":0.9280590323183262,"dias":24.47012889968242},{"metodo":"quantilica","q":0.96,"no_prazo":0.9427610685596861,"dias":26.838651223612928},{"metodo":"olist","q":null,"no_prazo":0.9097515411918551,"dias":23.447842331402953}],"por_q":{"0.85":{"geral_atual":0.9097515411918551,"geral_nova":0.8639080889220998,"dias_atual":23.447842331402953,"dias_nova":19.084419951429105,"sd_atual":0.05176952127780721,"sd_nova":0.02408130168635181,"nota_atual":4.094026770035494,"nota_nova":3.9956674201382403,"ufs":[{"customer_state":"SP","pedidos":23598,"no_prazo_atual":0.939,"no_prazo_nova":0.878,"promessa_atual":18.0,"promessa_nova":13.0,"dif_dias":-5.0},{"customer_state":"RJ","pedidos":6516,"no_prazo_atual":0.84,"no_prazo_nova":0.832,"promessa_atual":28.0,"promessa_nova":27.0,"dif_dias":-1.0},{"customer_state":"MG","pedidos":6134,"no_prazo_atual":0.93,"no_prazo_nova":0.861,"promessa_atual":24.0,"promessa_nova":18.0,"dif_dias":-6.0},{"customer_state":"RS","pedidos":2764,"no_prazo_atual":0.919,"no_prazo_nova":0.876,"promessa_atual":29.0,"promessa_nova":24.0,"dif_dias":-5.0},{"customer_state":"PR","pedidos":2733,"no_prazo_atual":0.945,"no_prazo_nova":0.875,"promessa_atual":24.0,"promessa_nova":18.0,"dif_dias":-6.0},{"customer_state":"SC","pedidos":1896,"no_prazo_atual":0.906,"no_prazo_nova":0.862,"promessa_atual":26.0,"promessa_nova":23.0,"dif_dias":-3.0},{"customer_state":"BA","pedidos":1770,"no_prazo_atual":0.838,"no_prazo_nova":0.838,"promessa_atual":28.0,"promessa_nova":29.0,"dif_dias":1.0},{"customer_state":"DF","pedidos":1210,"no_prazo_atual":0.92,"no_prazo_nova":0.862,"promessa_atual":23.0,"promessa_nova":20.0,"dif_dias":-3.0},{"customer_state":"ES","pedidos":1055,"no_prazo_atual":0.856,"no_prazo_nova":0.861,"promessa_atual":24.0,"promessa_nova":24.0,"dif_dias":0.0},{"customer_state":"GO","pedidos":1048,"no_prazo_atual":0.909,"no_prazo_nova":0.867,"promessa_atual":26.0,"promessa_nova":22.0,"dif_dias":-4.0},{"customer_state":"PE","pedidos":872,"no_prazo_atual":0.88,"no_prazo_nova":0.861,"promessa_atual":29.0,"promessa_nova":28.0,"dif_dias":-1.0},{"customer_state":"CE","pedidos":662,"no_prazo_atual":0.773,"no_prazo_nova":0.793,"promessa_atual":30.0,"promessa_nova":32.0,"dif_dias":2.0}]},"0.88":{"geral_atual":0.9097515411918551,"geral_nova":0.884251821408556,"dias_atual":23.447842331402953,"dias_nova":20.38864188305623,"sd_atual":0.05176952127780721,"sd_nova":0.025966761971272564,"nota_atual":4.094026770035494,"nota_nova":4.039642331402951,"ufs":[{"customer_state":"SP","pedidos":23598,"no_prazo_atual":0.939,"no_prazo_nova":0.896,"promessa_atual":18.0,"promessa_nova":14.0,"dif_dias":-4.0},{"customer_state":"RJ","pedidos":6516,"no_prazo_atual":0.84,"no_prazo_nova":0.856,"promessa_atual":28.0,"promessa_nova":29.0,"dif_dias":1.0},{"customer_state":"MG","pedidos":6134,"no_prazo_atual":0.93,"no_prazo_nova":0.885,"promessa_atual":24.0,"promessa_nova":20.0,"dif_dias":-4.0},{"customer_state":"RS","pedidos":2764,"no_prazo_atual":0.919,"no_prazo_nova":0.893,"promessa_atual":29.0,"promessa_nova":26.0,"dif_dias":-3.0},{"customer_state":"PR","pedidos":2733,"no_prazo_atual":0.945,"no_prazo_nova":0.899,"promessa_atual":24.0,"promessa_nova":20.0,"dif_dias":-4.0},{"customer_state":"SC","pedidos":1896,"no_prazo_atual":0.906,"no_prazo_nova":0.882,"promessa_atual":26.0,"promessa_nova":25.0,"dif_dias":-1.0},{"customer_state":"BA","pedidos":1770,"no_prazo_atual":0.838,"no_prazo_nova":0.86,"promessa_atual":28.0,"promessa_nova":30.0,"dif_dias":2.0},{"customer_state":"DF","pedidos":1210,"no_prazo_atual":0.92,"no_prazo_nova":0.884,"promessa_atual":23.0,"promessa_nova":21.0,"dif_dias":-2.0},{"customer_state":"ES","pedidos":1055,"no_prazo_atual":0.856,"no_prazo_nova":0.877,"promessa_atual":24.0,"promessa_nova":25.0,"dif_dias":1.0},{"customer_state":"GO","pedidos":1048,"no_prazo_atual":0.909,"no_prazo_nova":0.888,"promessa_atual":26.0,"promessa_nova":24.0,"dif_dias":-2.0},{"customer_state":"PE","pedidos":872,"no_prazo_atual":0.88,"no_prazo_nova":0.882,"promessa_atual":29.0,"promessa_nova":30.0,"dif_dias":1.0},{"customer_state":"CE","pedidos":662,"no_prazo_atual":0.773,"no_prazo_nova":0.804,"promessa_atual":30.0,"promessa_nova":35.0,"dif_dias":5.0}]},"0.90":{"geral_atual":0.9097515411918551,"geral_nova":0.8988791331963385,"dias_atual":23.447842331402953,"dias_nova":21.456940033626005,"sd_atual":0.05176952127780721,"sd_nova":0.024999848484389367,"nota_atual":4.094026770035494,"nota_nova":4.071111096581356,"ufs":[{"customer_state":"SP","pedidos":23598,"no_prazo_atual":0.939,"no_prazo_nova":0.909,"promessa_atual":18.0,"promessa_nova":15.0,"dif_dias":-3.0},{"customer_state":"RJ","pedidos":6516,"no_prazo_atual":0.84,"no_prazo_nova":0.875,"promessa_atual":28.0,"promessa_nova":31.0,"dif_dias":3.0},{"customer_state":"MG","pedidos":6134,"no_prazo_atual":0.93,"no_prazo_nova":0.897,"promessa_atual":24.0,"promessa_nova":21.0,"dif_dias":-3.0},{"customer_state":"RS","pedidos":2764,"no_prazo_atual":0.919,"no_prazo_nova":0.91,"promessa_atual":29.0,"promessa_nova":28.0,"dif_dias":-1.0},{"customer_state":"PR","pedidos":2733,"no_prazo_atual":0.945,"no_prazo_nova":0.916,"promessa_atual":24.0,"promessa_nova":21.0,"dif_dias":-3.0},{"customer_state":"SC","pedidos":1896,"no_prazo_atual":0.906,"no_prazo_nova":0.897,"promessa_atual":26.0,"promessa_nova":26.0,"dif_dias":0.0},{"customer_state":"BA","pedidos":1770,"no_prazo_atual":0.838,"no_prazo_nova":0.877,"promessa_atual":28.0,"promessa_nova":32.0,"dif_dias":4.0},{"customer_state":"DF","pedidos":1210,"no_prazo_atual":0.92,"no_prazo_nova":0.902,"promessa_atual":23.0,"promessa_nova":22.0,"dif_dias":-1.0},{"customer_state":"ES","pedidos":1055,"no_prazo_atual":0.856,"no_prazo_nova":0.891,"promessa_atual":24.0,"promessa_nova":26.0,"dif_dias":2.0},{"customer_state":"GO","pedidos":1048,"no_prazo_atual":0.909,"no_prazo_nova":0.906,"promessa_atual":26.0,"promessa_nova":25.0,"dif_dias":-1.0},{"customer_state":"PE","pedidos":872,"no_prazo_atual":0.88,"no_prazo_nova":0.9,"promessa_atual":29.0,"promessa_nova":31.0,"dif_dias":2.0},{"customer_state":"CE","pedidos":662,"no_prazo_atual":0.773,"no_prazo_nova":0.823,"promessa_atual":30.0,"promessa_nova":37.0,"dif_dias":7.0}]},"0.92":{"geral_atual":0.9097515411918551,"geral_nova":0.9131888660564169,"dias_atual":23.447842331402953,"dias_nova":22.80681860638894,"sd_atual":0.05176952127780721,"sd_nova":0.023839742727918316,"nota_atual":4.094026770035494,"nota_nova":4.104273622267887,"ufs":[{"customer_state":"SP","pedidos":23598,"no_prazo_atual":0.939,"no_prazo_nova":0.923,"promessa_atual":18.0,"promessa_nova":16.0,"dif_dias":-2.0},{"customer_state":"RJ","pedidos":6516,"no_prazo_atual":0.84,"no_prazo_nova":0.888,"promessa_atual":28.0,"promessa_nova":34.0,"dif_dias":6.0},{"customer_state":"MG","pedidos":6134,"no_prazo_atual":0.93,"no_prazo_nova":0.915,"promessa_atual":24.0,"promessa_nova":22.0,"dif_dias":-2.0},{"customer_state":"RS","pedidos":2764,"no_prazo_atual":0.919,"no_prazo_nova":0.923,"promessa_atual":29.0,"promessa_nova":30.0,"dif_dias":1.0},{"customer_state":"PR","pedidos":2733,"no_prazo_atual":0.945,"no_prazo_nova":0.933,"promessa_atual":24.0,"promessa_nova":22.0,"dif_dias":-2.0},{"customer_state":"SC","pedidos":1896,"no_prazo_atual":0.906,"no_prazo_nova":0.912,"promessa_atual":26.0,"promessa_nova":28.0,"dif_dias":2.0},{"customer_state":"BA","pedidos":1770,"no_prazo_atual":0.838,"no_prazo_nova":0.901,"promessa_atual":28.0,"promessa_nova":33.0,"dif_dias":5.0},{"customer_state":"DF","pedidos":1210,"no_prazo_atual":0.92,"no_prazo_nova":0.905,"promessa_atual":23.0,"promessa_nova":23.0,"dif_dias":0.0},{"customer_state":"ES","pedidos":1055,"no_prazo_atual":0.856,"no_prazo_nova":0.906,"promessa_atual":24.0,"promessa_nova":28.0,"dif_dias":4.0},{"customer_state":"GO","pedidos":1048,"no_prazo_atual":0.909,"no_prazo_nova":0.917,"promessa_atual":26.0,"promessa_nova":26.0,"dif_dias":0.0},{"customer_state":"PE","pedidos":872,"no_prazo_atual":0.88,"no_prazo_nova":0.907,"promessa_atual":29.0,"promessa_nova":34.0,"dif_dias":5.0},{"customer_state":"CE","pedidos":662,"no_prazo_atual":0.773,"no_prazo_nova":0.84,"promessa_atual":30.0,"promessa_nova":39.0,"dif_dias":9.0}]},"0.94":{"geral_atual":0.9097515411918551,"geral_nova":0.9280590323183262,"dias_atual":23.447842331402953,"dias_nova":24.47012889968242,"sd_atual":0.05176952127780721,"sd_nova":0.022125502904744986,"nota_atual":4.094026770035494,"nota_nova":4.137499084625444,"ufs":[{"customer_state":"SP","pedidos":23598,"no_prazo_atual":0.939,"no_prazo_nova":0.937,"promessa_atual":18.0,"promessa_nova":17.0,"dif_dias":-1.0},{"customer_state":"RJ","pedidos":6516,"no_prazo_atual":0.84,"no_prazo_nova":0.906,"promessa_atual":28.0,"promessa_nova":37.0,"dif_dias":9.0},{"customer_state":"MG","pedidos":6134,"no_prazo_atual":0.93,"no_prazo_nova":0.928,"promessa_atual":24.0,"promessa_nova":23.0,"dif_dias":-1.0},{"customer_state":"RS","pedidos":2764,"no_prazo_atual":0.919,"no_prazo_nova":0.94,"promessa_atual":29.0,"promessa_nova":32.0,"dif_dias":3.0},{"customer_state":"PR","pedidos":2733,"no_prazo_atual":0.945,"no_prazo_nova":0.943,"promessa_atual":24.0,"promessa_nova":23.0,"dif_dias":-1.0},{"customer_state":"SC","pedidos":1896,"no_prazo_atual":0.906,"no_prazo_nova":0.926,"promessa_atual":26.0,"promessa_nova":29.0,"dif_dias":3.0},{"customer_state":"BA","pedidos":1770,"no_prazo_atual":0.838,"no_prazo_nova":0.919,"promessa_atual":28.0,"promessa_nova":36.0,"dif_dias":8.0},{"customer_state":"DF","pedidos":1210,"no_prazo_atual":0.92,"no_prazo_nova":0.922,"promessa_atual":23.0,"promessa_nova":24.0,"dif_dias":1.0},{"customer_state":"ES","pedidos":1055,"no_prazo_atual":0.856,"no_prazo_nova":0.919,"promessa_atual":24.0,"promessa_nova":30.0,"dif_dias":6.0},{"customer_state":"GO","pedidos":1048,"no_prazo_atual":0.909,"no_prazo_nova":0.937,"promessa_atual":26.0,"promessa_nova":28.0,"dif_dias":2.0},{"customer_state":"PE","pedidos":872,"no_prazo_atual":0.88,"no_prazo_nova":0.92,"promessa_atual":29.0,"promessa_nova":36.0,"dif_dias":7.0},{"customer_state":"CE","pedidos":662,"no_prazo_atual":0.773,"no_prazo_nova":0.86,"promessa_atual":30.0,"promessa_nova":41.0,"dif_dias":11.0}]},"0.96":{"geral_atual":0.9097515411918551,"geral_nova":0.9427610685596861,"dias_atual":23.447842331402953,"dias_nova":26.838651223612928,"sd_atual":0.05176952127780721,"sd_nova":0.019185497995447824,"nota_atual":4.094026770035494,"nota_nova":4.1735374929945825,"ufs":[{"customer_state":"SP","pedidos":23598,"no_prazo_atual":0.939,"no_prazo_nova":0.951,"promessa_atual":18.0,"promessa_nova":19.0,"dif_dias":1.0},{"customer_state":"RJ","pedidos":6516,"no_prazo_atual":0.84,"no_prazo_nova":0.926,"promessa_atual":28.0,"promessa_nova":41.0,"dif_dias":13.0},{"customer_state":"MG","pedidos":6134,"no_prazo_atual":0.93,"no_prazo_nova":0.942,"promessa_atual":24.0,"promessa_nova":25.0,"dif_dias":1.0},{"customer_state":"RS","pedidos":2764,"no_prazo_atual":0.919,"no_prazo_nova":0.957,"promessa_atual":29.0,"promessa_nova":35.0,"dif_dias":6.0},{"customer_state":"PR","pedidos":2733,"no_prazo_atual":0.945,"no_prazo_nova":0.957,"promessa_atual":24.0,"promessa_nova":25.0,"dif_dias":1.0},{"customer_state":"SC","pedidos":1896,"no_prazo_atual":0.906,"no_prazo_nova":0.938,"promessa_atual":26.0,"promessa_nova":32.0,"dif_dias":6.0},{"customer_state":"BA","pedidos":1770,"no_prazo_atual":0.838,"no_prazo_nova":0.933,"promessa_atual":28.0,"promessa_nova":38.0,"dif_dias":10.0},{"customer_state":"DF","pedidos":1210,"no_prazo_atual":0.92,"no_prazo_nova":0.937,"promessa_atual":23.0,"promessa_nova":26.0,"dif_dias":3.0},{"customer_state":"ES","pedidos":1055,"no_prazo_atual":0.856,"no_prazo_nova":0.936,"promessa_atual":24.0,"promessa_nova":32.0,"dif_dias":8.0},{"customer_state":"GO","pedidos":1048,"no_prazo_atual":0.909,"no_prazo_nova":0.95,"promessa_atual":26.0,"promessa_nova":30.0,"dif_dias":4.0},{"customer_state":"PE","pedidos":872,"no_prazo_atual":0.88,"no_prazo_nova":0.933,"promessa_atual":29.0,"promessa_nova":39.0,"dif_dias":10.0},{"customer_state":"CE","pedidos":662,"no_prazo_atual":0.773,"no_prazo_nova":0.885,"promessa_atual":30.0,"promessa_nova":45.0,"dif_dias":15.0}]}},"n_teste":53530}/*DADOS-FIM*/;
+    var QS = ['0.85', '0.88', '0.90', '0.92', '0.94', '0.96'];
+    var NS = 'http://www.w3.org/2000/svg';
+    var FAIXAS_EN = {
+      '8+ dias atrasado': '8+ days late', '4 a 7 atrasado': '4–7 days late', '1 a 3 atrasado': '1–3 days late',
+      'no dia': 'on the day', '1 a 3 antes': '1–3 days early', '4 a 7 antes': '4–7 days early',
+      '8 a 14 antes': '8–14 days early', '15 a 21 antes': '15–21 days early', '22+ antes': '22+ days early'
+    };
+    var MESES = { pt: ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],
+                  en: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] };
+
+    function lang() { return document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'pt'; }
+    function cor(nome) { return getComputedStyle(document.documentElement).getPropertyValue(nome).trim(); }
+    function pct(v, casas) {
+      var s = (v * 100).toFixed(casas === undefined ? 1 : casas);
+      return (lang() === 'pt' ? s.replace('.', ',') : s) + '%';
+    }
+    function num(v, casas) {
+      var s = v.toFixed(casas);
+      return lang() === 'pt' ? s.replace('.', ',') : s;
+    }
+    function el(tag, attrs, pai) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      if (pai) pai.appendChild(e);
+      return e;
+    }
+    function texto(pai, x, y, t, attrs) {
+      var e = el('text', Object.assign({ x: x, y: y }, attrs || {}), pai);
+      e.textContent = t;
+      return e;
+    }
+    function escala(d0, d1, r0, r1) { return function (v) { return r0 + (v - d0) / (d1 - d0) * (r1 - r0); }; }
+    function novoSvg(alvo, w, h) {
+      alvo.innerHTML = '';
+      var s = el('svg', { viewBox: '0 0 ' + w + ' ' + h, class: 'svgchart', role: 'img' }, alvo);
+      return s;
+    }
+    function largura(alvo) { return Math.max(320, Math.min(900, alvo.clientWidth || 640)); }
+
+    /* --- números do topo ------------------------------------------------ */
+    function topo() {
+      var r = D.resumo, q = D.por_q['0.92'];
+      document.getElementById('c-pedidos').textContent = num(r.pedidos / 1000, 0) + (lang() === 'pt' ? ' mil' : 'k');
+      document.getElementById('c-noprazo').textContent = pct(r.no_prazo);
+      document.getElementById('c-folga').textContent = num(r.folga, 0) + (lang() === 'pt' ? ' dias' : ' days');
+      document.getElementById('c-disp').textContent = '−' + pct(1 - q.sd_nova / q.sd_atual, 0);
+      var u = q.ufs.filter(function (x) { return x.customer_state === 'SP' || x.customer_state === 'MG'; });
+      var share = u.reduce(function (a, x) { return a + x.pedidos; }, 0) / D.n_teste;
+      document.getElementById('p-share').textContent = pct(share, 0);
+      document.getElementById('p-share-en').textContent = pct(share, 0);
+    }
+
+    /* --- 1. folga × no prazo por UF ------------------------------------- */
+    function grafUF() {
+      var alvo = document.getElementById('ch-uf');
+      var w = largura(alvo), h = Math.round(w * 0.56), m = { l: 52, r: 16, t: 12, b: 40 };
+      var s = novoSvg(alvo, w, h);
+      var dados = D.por_uf;
+      var x = escala(9, 18, m.l, w - m.r), y = escala(0.74, 0.98, h - m.b, m.t);
+      var maxN = Math.max.apply(null, dados.map(function (d) { return d.pedidos; }));
+      [0.75, 0.80, 0.85, 0.90, 0.95].forEach(function (v) {
+        el('line', { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), class: 'grid' }, s);
+        texto(s, m.l - 8, y(v) + 4, pct(v, 0), { 'text-anchor': 'end' });
+      });
+      [10, 12, 14, 16, 18].forEach(function (v) {
+        texto(s, x(v), h - m.b + 18, v, { 'text-anchor': 'middle' });
+      });
+      texto(s, (m.l + w - m.r) / 2, h - 4, lang() === 'pt' ? 'folga mediana (dias)' : 'median slack (days)', { 'text-anchor': 'middle' });
+      var rotulos = [];
+      dados.slice().sort(function (a, b) { return b.pedidos - a.pedidos; }).forEach(function (d) {
+        var r = 6 + 26 * Math.sqrt(d.pedidos / maxN);
+        var lx = x(d.folga_mediana), ly = y(d.no_prazo) + 4, ancora = 'middle';
+        var perto = rotulos.some(function (p) { return Math.abs(p[0] - lx) < 18 && Math.abs(p[1] - ly) < 13; });
+        if (perto) {
+          /* dois estados no mesmo ponto: o menor ganha rótulo do lado de fora do círculo */
+          var esq = lx > (m.l + w - m.r) / 2;
+          lx = esq ? lx - r - 4 : lx + r + 4;
+          ancora = esq ? 'end' : 'start';
+        }
+        rotulos.push([lx, ly]);
+        var ruim = d.no_prazo < 0.88;
+        var c = el('circle', { cx: x(d.folga_mediana), cy: y(d.no_prazo), r: r,
+          fill: ruim ? cor('--bad') : cor('--azure'), 'fill-opacity': 0.22,
+          stroke: ruim ? cor('--bad') : cor('--azure'), 'stroke-width': 1.2 }, s);
+        var t = el('title', {}, c);
+        t.textContent = d.customer_state + ': ' + pct(d.no_prazo) + ' · ' + d.pedidos.toLocaleString(lang() === 'pt' ? 'pt-BR' : 'en-US') + (lang() === 'pt' ? ' pedidos' : ' orders');
+        texto(s, lx, ly, d.customer_state, { 'text-anchor': ancora, class: 'lbl', 'font-size': 10 });
+      });
+    }
+
+    /* --- 2. notas por faixa --------------------------------------------- */
+    function grafNotas() {
+      var alvo = document.getElementById('ch-notas');
+      alvo.innerHTML = '';
+      var max = Math.max.apply(null, D.notas.map(function (d) { return d.ic_sup; }));
+      D.notas.forEach(function (d) {
+        var nome = lang() === 'pt' ? d.faixa : FAIXAS_EN[d.faixa];
+        var ruim = d.faixa.indexOf('atrasado') >= 0;
+        var li = document.createElement('div');
+        li.className = 'bar' + (ruim ? ' b-bad' : '');
+        li.title = nome + ': ' + pct(d.pct_nota_1_2) + ' (IC ' + pct(d.ic_inf) + '–' + pct(d.ic_sup) + ') · n=' + d.pedidos.toLocaleString();
+        li.innerHTML = '<span class="name"></span><span class="track"><span class="fill"></span></span><span class="val"></span>';
+        li.querySelector('.name').textContent = nome;
+        li.querySelector('.fill').style.width = Math.max(2, d.pct_nota_1_2 / max * 100) + '%';
+        li.querySelector('.val').textContent = pct(d.pct_nota_1_2, 0);
+        alvo.appendChild(li);
+      });
+    }
+
+    /* --- 3. curva de troca ---------------------------------------------- */
+    function grafCurva(qSel) {
+      var alvo = document.getElementById('ch-curva');
+      var w = largura(alvo), h = Math.round(w * 0.5), m = { l: 52, r: 16, t: 12, b: 40 };
+      var s = novoSvg(alvo, w, h);
+      var x = escala(17, 34, m.l, w - m.r), y = escala(0.82, 0.97, h - m.b, m.t);
+      [0.84, 0.88, 0.92, 0.96].forEach(function (v) {
+        el('line', { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), class: 'grid' }, s);
+        texto(s, m.l - 8, y(v) + 4, pct(v, 0), { 'text-anchor': 'end' });
+      });
+      [18, 22, 26, 30, 34].forEach(function (v) { texto(s, x(v), h - m.b + 18, v, { 'text-anchor': 'middle' }); });
+      texto(s, (m.l + w - m.r) / 2, h - 4, lang() === 'pt' ? 'promessa média (dias)' : 'average promise (days)', { 'text-anchor': 'middle' });
+      var series = [['rota', cor('--ink-faint')], ['quantilica', cor('--azure')]];
+      series.forEach(function (sr) {
+        var pts = D.curva.filter(function (c) { return c.metodo === sr[0]; });
+        el('polyline', { points: pts.map(function (p) { return x(p.dias) + ',' + y(p.no_prazo); }).join(' '),
+          fill: 'none', stroke: sr[1], 'stroke-width': 2 }, s);
+        pts.forEach(function (p) {
+          var sel = sr[0] === 'quantilica' && p.q.toFixed(2) === qSel;
+          var c = el('circle', { cx: x(p.dias), cy: y(p.no_prazo), r: sel ? 7 : 4, fill: sel ? cor('--surface') : sr[1],
+            stroke: sr[1], 'stroke-width': sel ? 3 : 0 }, s);
+          el('title', {}, c).textContent = 'P' + Math.round(p.q * 100) + ': ' + num(p.dias, 1) + (lang() === 'pt' ? ' dias · ' : ' days · ') + pct(p.no_prazo);
+        });
+      });
+      var o = D.curva.filter(function (c) { return c.metodo === 'olist'; })[0];
+      var cx = x(o.dias), cy = y(o.no_prazo);
+      var dm = el('rect', { x: cx - 6, y: cy - 6, width: 12, height: 12, fill: cor('--bad'), transform: 'rotate(45 ' + cx + ' ' + cy + ')' }, s);
+      el('title', {}, dm).textContent = 'Olist: ' + num(o.dias, 1) + (lang() === 'pt' ? ' dias · ' : ' days · ') + pct(o.no_prazo);
+      var lg = document.getElementById('lg-curva');
+      lg.innerHTML = lang() === 'pt'
+        ? '<span><i class="ln" style="background:var(--ink-faint)"></i>Percentil por rota</span><span><i class="ln" style="background:var(--azure)"></i>Regressão quantílica</span><span><i class="sq" style="background:var(--bad)"></i>Promessa atual (Olist)</span>'
+        : '<span><i class="ln" style="background:var(--ink-faint)"></i>Route percentile</span><span><i class="ln" style="background:var(--azure)"></i>Quantile regression</span><span><i class="sq" style="background:var(--bad)"></i>Current promise (Olist)</span>';
+    }
+
+    /* --- 4. UF antes × depois ------------------------------------------- */
+    function grafUF2(qSel) {
+      var alvo = document.getElementById('ch-uf2');
+      var dados = D.por_q[qSel].ufs.slice().sort(function (a, b) { return a.no_prazo_atual - b.no_prazo_atual; });
+      var w = largura(alvo), lin = 26, m = { l: 40, r: 64, t: 8, b: 30 };
+      var h = m.t + m.b + lin * dados.length;
+      var s = novoSvg(alvo, w, h);
+      var x = escala(0.76, 0.98, m.l, w - m.r);
+      [0.80, 0.85, 0.90, 0.95].forEach(function (v) {
+        el('line', { x1: x(v), x2: x(v), y1: m.t, y2: h - m.b, class: 'grid' }, s);
+        texto(s, x(v), h - m.b + 18, pct(v, 0), { 'text-anchor': 'middle' });
+      });
+      el('line', { x1: x(0.90), x2: x(0.90), y1: m.t, y2: h - m.b, stroke: cor('--ok'), 'stroke-dasharray': '4 4', 'stroke-width': 1.2 }, s);
+      dados.forEach(function (d, i) {
+        var yy = m.t + lin * i + lin / 2;
+        texto(s, m.l - 8, yy + 4, d.customer_state, { 'text-anchor': 'end', class: 'lbl' });
+        el('line', { x1: x(d.no_prazo_atual), x2: x(d.no_prazo_nova), y1: yy, y2: yy, stroke: cor('--line-strong'), 'stroke-width': 3 }, s);
+        var a = el('circle', { cx: x(d.no_prazo_atual), cy: yy, r: 6, fill: cor('--ink-faint') }, s);
+        el('title', {}, a).textContent = d.customer_state + (lang() === 'pt' ? ' atual: ' : ' current: ') + pct(d.no_prazo_atual) + ' · ' + d.promessa_atual + (lang() === 'pt' ? ' dias' : ' days');
+        var n = el('circle', { cx: x(d.no_prazo_nova), cy: yy, r: 6, fill: cor('--azure') }, s);
+        el('title', {}, n).textContent = d.customer_state + (lang() === 'pt' ? ' calibrada: ' : ' calibrated: ') + pct(d.no_prazo_nova) + ' · ' + d.promessa_nova + (lang() === 'pt' ? ' dias' : ' days');
+        var dd = d.dif_dias;
+        texto(s, w - 6, yy + 4, (dd > 0 ? '+' : dd < 0 ? '−' : '±') + Math.abs(dd) + (lang() === 'pt' ? ' d' : ' d'),
+          { 'text-anchor': 'end', fill: dd < 0 ? cor('--ok') : dd > 0 ? cor('--ink-soft') : cor('--ink-faint') });
+      });
+    }
+
+    function leituras(qSel) {
+      var r = D.por_q[qSel];
+      var L = lang();
+      document.getElementById('q-out').textContent = 'P' + Math.round(parseFloat(qSel) * 100);
+      document.getElementById('r-ok').textContent = pct(r.geral_nova);
+      document.getElementById('r-ok-d').textContent = (L === 'pt' ? 'atual ' : 'current ') + pct(r.geral_atual);
+      document.getElementById('r-dias').textContent = num(r.dias_nova, 1) + (L === 'pt' ? ' dias' : ' days');
+      document.getElementById('r-dias-d').textContent = (L === 'pt' ? 'atual ' : 'current ') + num(r.dias_atual, 1);
+      document.getElementById('r-sd').textContent = num(r.sd_nova * 100, 1) + ' p.p.';
+      document.getElementById('r-sd-d').textContent = (L === 'pt' ? 'atual ' : 'current ') + num(r.sd_atual * 100, 1) + ' p.p.';
+      document.getElementById('r-nota').textContent = num(r.nota_nova, 2);
+      document.getElementById('r-nota-d').textContent = (L === 'pt' ? 'atual ' : 'current ') + num(r.nota_atual, 2);
+    }
+
+    /* --- 5. gráfico p --------------------------------------------------- */
+    function grafP() {
+      var alvo = document.getElementById('ch-p');
+      var S = D.semanas;
+      var w = largura(alvo), h = Math.round(w * 0.42), m = { l: 52, r: 12, t: 12, b: 30 };
+      var s = novoSvg(alvo, w, h);
+      var t0 = new Date(S[0].dia_compra).getTime(), t1 = new Date(S[S.length - 1].dia_compra).getTime();
+      var x = function (dt) { return m.l + (new Date(dt).getTime() - t0) / (t1 - t0) * (w - m.l - m.r); };
+      var y = escala(0.70, 1.0, h - m.b, m.t);
+      [0.70, 0.80, 0.90, 1.0].forEach(function (v) {
+        el('line', { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), class: 'grid' }, s);
+        texto(s, m.l - 8, y(v) + 4, pct(v, 0), { 'text-anchor': 'end' });
+      });
+      var vistos = {};
+      S.forEach(function (d) {
+        var dt = new Date(d.dia_compra), chave = dt.getUTCFullYear() + '-' + dt.getUTCMonth();
+        if (vistos[chave] || (dt.getUTCMonth() % 3) !== 0) return;
+        vistos[chave] = 1;
+        texto(s, x(d.dia_compra), h - m.b + 18, MESES[lang()][dt.getUTCMonth()] + '/' + String(dt.getUTCFullYear()).slice(2), { 'text-anchor': 'middle' });
+      });
+      var banda = S.map(function (d) { return x(d.dia_compra) + ',' + y(d.lsc); }).join(' ') + ' ' +
+                  S.slice().reverse().map(function (d) { return x(d.dia_compra) + ',' + y(d.lic); }).join(' ');
+      el('polygon', { points: banda, fill: cor('--azure-soft'), stroke: 'none' }, s);
+      el('line', { x1: m.l, x2: w - m.r, y1: y(D.p_barra), y2: y(D.p_barra), stroke: cor('--ink-faint'), 'stroke-dasharray': '3 3' }, s);
+      el('polyline', { points: S.map(function (d) { return x(d.dia_compra) + ',' + y(d.taxa); }).join(' '),
+        fill: 'none', stroke: cor('--azure'), 'stroke-width': 1.8 }, s);
+      S.forEach(function (d) {
+        var c = el('circle', { cx: x(d.dia_compra), cy: y(d.taxa), r: d.fora ? 4.5 : 2.2, fill: d.fora ? cor('--bad') : cor('--azure') }, s);
+        el('title', {}, c).textContent = d.dia_compra + ': ' + pct(d.taxa) + (d.fora ? (lang() === 'pt' ? ' · fora de controle' : ' · out of control') : '');
+      });
+      document.getElementById('lg-p').innerHTML = lang() === 'pt'
+        ? '<span><i class="ln" style="background:var(--azure)"></i>% no prazo</span><span><i style="background:var(--azure-soft);border-radius:2px"></i>faixa normal (3σ)</span><span><i style="background:var(--bad)"></i>fora de controle</span>'
+        : '<span><i class="ln" style="background:var(--azure)"></i>% on time</span><span><i style="background:var(--azure-soft);border-radius:2px"></i>normal band (3σ)</span><span><i style="background:var(--bad)"></i>out of control</span>';
+    }
+
+    var slider = document.getElementById('q');
+    function qAtual() { return QS[parseInt(slider.value, 10)]; }
+    function desenhar() {
+      topo(); grafUF(); grafNotas(); grafCurva(qAtual()); grafUF2(qAtual()); leituras(qAtual()); grafP();
+    }
+    slider.addEventListener('input', function () { grafCurva(qAtual()); grafUF2(qAtual()); leituras(qAtual()); });
+    document.addEventListener('horas-lang', desenhar);
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', desenhar);
+    var tm;
+    window.addEventListener('resize', function () { clearTimeout(tm); tm = setTimeout(desenhar, 150); });
+    desenhar();
+  })();
+</script>
+</body>
+</html>

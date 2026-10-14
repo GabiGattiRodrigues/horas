@@ -1,0 +1,8 @@
+tree_index,node_depth,node_index,left_child,right_child,parent_index,split_feature,split_gain,threshold,decision_type,missing_direction,missing_type,value,weight,count
+0,1,0-S0,0-S2,0-S1,,customer_state,173.79800415039062,"DF, ES, GO, MG, MS, MT, PR, RS, SC, SP",==,right,NaN,25.9981,39357,39357
+0,2,0-S2,0-L0,0-L3,0-S0,vend_manuseio_p90,26.642900466918945,12.800000000000002,<=,left,None,25.9619,30331,30331
+0,3,0-L0,,,0-S2,,,,,,,21.0,28720,28720
+0,3,0-L3,,,0-S2,,,,,,,32.0,1611,1611
+0,2,0-S1,0-L1,0-L2,0-S0,customer_state,29.21929931640625,"AL, AM, AP, CE, PA, RR",==,right,NaN,26.1198,9026,9026
+0,3,0-L1,,,0-S1,,,,,,,45.800018191337585,1091,1091
+0,3,0-L2,,,0-S1,,,,,,,36.0,7935,7935

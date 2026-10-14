@@ -1,0 +1,1733 @@
+{
+ "resumo": {
+  "pedidos": 98199,
+  "no_prazo": 0.9158545402702675,
+  "prometido": 24.0,
+  "real": 10.0,
+  "folga": 12.0,
+  "p95": 29.0
+ },
+ "por_uf": [
+  {
+   "customer_state": "AL",
+   "pedidos": 411,
+   "no_prazo": 0.759,
+   "folga_mediana": 10.0,
+   "prometido_mediana": 32.0,
+   "real_mediana": 22.0
+  },
+  {
+   "customer_state": "MA",
+   "pedidos": 736,
+   "no_prazo": 0.804,
+   "folga_mediana": 12.0,
+   "prometido_mediana": 31.0,
+   "real_mediana": 19.0
+  },
+  {
+   "customer_state": "SE",
+   "pedidos": 345,
+   "no_prazo": 0.823,
+   "folga_mediana": 12.0,
+   "prometido_mediana": 30.0,
+   "real_mediana": 18.0
+  },
+  {
+   "customer_state": "CE",
+   "pedidos": 1323,
+   "no_prazo": 0.834,
+   "folga_mediana": 14.0,
+   "prometido_mediana": 32.0,
+   "real_mediana": 18.0
+  },
+  {
+   "customer_state": "PI",
+   "pedidos": 490,
+   "no_prazo": 0.837,
+   "folga_mediana": 14.0,
+   "prometido_mediana": 30.0,
+   "real_mediana": 16.0
+  },
+  {
+   "customer_state": "RJ",
+   "pedidos": 12697,
+   "no_prazo": 0.855,
+   "folga_mediana": 13.0,
+   "prometido_mediana": 25.0,
+   "real_mediana": 12.0
+  },
+  {
+   "customer_state": "BA",
+   "pedidos": 3344,
+   "no_prazo": 0.855,
+   "folga_mediana": 13.0,
+   "prometido_mediana": 30.0,
+   "real_mediana": 17.0
+  },
+  {
+   "customer_state": "PA",
+   "pedidos": 969,
+   "no_prazo": 0.867,
+   "folga_mediana": 16.0,
+   "prometido_mediana": 37.0,
+   "real_mediana": 21.0
+  },
+  {
+   "customer_state": "PB",
+   "pedidos": 531,
+   "no_prazo": 0.872,
+   "folga_mediana": 15.0,
+   "prometido_mediana": 33.0,
+   "real_mediana": 18.0
+  },
+  {
+   "customer_state": "PE",
+   "pedidos": 1643,
+   "no_prazo": 0.876,
+   "folga_mediana": 16.0,
+   "prometido_mediana": 32.0,
+   "real_mediana": 16.0
+  },
+  {
+   "customer_state": "ES",
+   "pedidos": 2018,
+   "no_prazo": 0.883,
+   "folga_mediana": 12.0,
+   "prometido_mediana": 26.0,
+   "real_mediana": 14.0
+  },
+  {
+   "customer_state": "RN",
+   "pedidos": 482,
+   "no_prazo": 0.892,
+   "folga_mediana": 16.5,
+   "prometido_mediana": 32.5,
+   "real_mediana": 16.0
+  },
+  {
+   "customer_state": "MS",
+   "pedidos": 708,
+   "no_prazo": 0.894,
+   "folga_mediana": 12.0,
+   "prometido_mediana": 26.0,
+   "real_mediana": 14.0
+  },
+  {
+   "customer_state": "SC",
+   "pedidos": 3599,
+   "no_prazo": 0.904,
+   "folga_mediana": 13.0,
+   "prometido_mediana": 26.0,
+   "real_mediana": 13.0
+  },
+  {
+   "customer_state": "GO",
+   "pedidos": 1998,
+   "no_prazo": 0.915,
+   "folga_mediana": 13.0,
+   "prometido_mediana": 27.0,
+   "real_mediana": 14.0
+  },
+  {
+   "customer_state": "MT",
+   "pedidos": 902,
+   "no_prazo": 0.924,
+   "folga_mediana": 16.0,
+   "prometido_mediana": 32.0,
+   "real_mediana": 16.0
+  },
+  {
+   "customer_state": "DF",
+   "pedidos": 2120,
+   "no_prazo": 0.925,
+   "folga_mediana": 14.0,
+   "prometido_mediana": 25.0,
+   "real_mediana": 11.0
+  },
+  {
+   "customer_state": "RS",
+   "pedidos": 5415,
+   "no_prazo": 0.927,
+   "folga_mediana": 16.0,
+   "prometido_mediana": 29.0,
+   "real_mediana": 13.0
+  },
+  {
+   "customer_state": "SP",
+   "pedidos": 41125,
+   "no_prazo": 0.94,
+   "folga_mediana": 12.0,
+   "prometido_mediana": 19.0,
+   "real_mediana": 7.0
+  },
+  {
+   "customer_state": "MG",
+   "pedidos": 11496,
+   "no_prazo": 0.943,
+   "folga_mediana": 14.0,
+   "prometido_mediana": 24.0,
+   "real_mediana": 10.0
+  },
+  {
+   "customer_state": "PR",
+   "pedidos": 4982,
+   "no_prazo": 0.948,
+   "folga_mediana": 15.0,
+   "prometido_mediana": 25.0,
+   "real_mediana": 10.0
+  }
+ ],
+ "notas": [
+  {
+   "faixa": "8+ dias atrasado",
+   "pedidos": 2781,
+   "nota_media": 1.696,
+   "notas_ruins": 2205,
+   "pct_nota_1_2": 0.793,
+   "ic_inf": 0.777,
+   "ic_sup": 0.808
+  },
+  {
+   "faixa": "4 a 7 atrasado",
+   "pedidos": 1748,
+   "nota_media": 2.103,
+   "notas_ruins": 1183,
+   "pct_nota_1_2": 0.677,
+   "ic_inf": 0.654,
+   "ic_sup": 0.698
+  },
+  {
+   "faixa": "1 a 3 atrasado",
+   "pedidos": 1852,
+   "nota_media": 3.291,
+   "notas_ruins": 595,
+   "pct_nota_1_2": 0.321,
+   "ic_inf": 0.3,
+   "ic_sup": 0.343
+  },
+  {
+   "faixa": "no dia",
+   "pedidos": 1280,
+   "nota_media": 4.034,
+   "notas_ruins": 159,
+   "pct_nota_1_2": 0.124,
+   "ic_inf": 0.107,
+   "ic_sup": 0.143
+  },
+  {
+   "faixa": "1 a 3 antes",
+   "pedidos": 4705,
+   "nota_media": 4.133,
+   "notas_ruins": 528,
+   "pct_nota_1_2": 0.112,
+   "ic_inf": 0.104,
+   "ic_sup": 0.122
+  },
+  {
+   "faixa": "4 a 7 antes",
+   "pedidos": 12529,
+   "nota_media": 4.226,
+   "notas_ruins": 1237,
+   "pct_nota_1_2": 0.099,
+   "ic_inf": 0.094,
+   "ic_sup": 0.104
+  },
+  {
+   "faixa": "8 a 14 antes",
+   "pedidos": 36158,
+   "nota_media": 4.311,
+   "notas_ruins": 3220,
+   "pct_nota_1_2": 0.089,
+   "ic_inf": 0.086,
+   "ic_sup": 0.092
+  },
+  {
+   "faixa": "15 a 21 antes",
+   "pedidos": 24165,
+   "nota_media": 4.341,
+   "notas_ruins": 2036,
+   "pct_nota_1_2": 0.084,
+   "ic_inf": 0.081,
+   "ic_sup": 0.088
+  },
+  {
+   "faixa": "22+ antes",
+   "pedidos": 10606,
+   "nota_media": 4.282,
+   "notas_ruins": 1109,
+   "pct_nota_1_2": 0.105,
+   "ic_inf": 0.099,
+   "ic_sup": 0.111
+  }
+ ],
+ "semanas": [
+  {
+   "dia_compra": "2017-01-23",
+   "pedidos": 350,
+   "taxa": 0.9228571428571428,
+   "lic": 0.871194267422225,
+   "lsc": 0.9602820842757334,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-01-30",
+   "pedidos": 449,
+   "taxa": 0.9309576837416481,
+   "lic": 0.8764104193316583,
+   "lsc": 0.9550659323663001,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-02-06",
+   "pedidos": 529,
+   "taxa": 0.941398865784499,
+   "lic": 0.879505992370556,
+   "lsc": 0.9519703593274024,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-02-13",
+   "pedidos": 393,
+   "taxa": 0.9491094147582697,
+   "lic": 0.8737017224369675,
+   "lsc": 0.9577746292609909,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-02-20",
+   "pedidos": 369,
+   "taxa": 0.9051490514905149,
+   "lic": 0.8723562168186254,
+   "lsc": 0.959120134879333,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-02-27",
+   "pedidos": 477,
+   "taxa": 0.9182389937106918,
+   "lic": 0.8775821483220334,
+   "lsc": 0.953894203375925,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-03-06",
+   "pedidos": 566,
+   "taxa": 0.9363957597173145,
+   "lic": 0.8807102737381982,
+   "lsc": 0.9507660779597602,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-03-13",
+   "pedidos": 609,
+   "taxa": 0.9211822660098522,
+   "lic": 0.881969526017299,
+   "lsc": 0.9495068256806594,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-03-20",
+   "pedidos": 635,
+   "taxa": 0.9307086614173228,
+   "lic": 0.8826680779709446,
+   "lsc": 0.9488082737270138,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-03-27",
+   "pedidos": 558,
+   "taxa": 0.9390681003584229,
+   "lic": 0.8804600712573656,
+   "lsc": 0.9510162804405928,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-04-03",
+   "pedidos": 580,
+   "taxa": 0.9103448275862069,
+   "lic": 0.8811356066231636,
+   "lsc": 0.9503407450747948,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-04-10",
+   "pedidos": 437,
+   "taxa": 0.897025171624714,
+   "lic": 0.875874106978613,
+   "lsc": 0.9556022447193454,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-04-17",
+   "pedidos": 563,
+   "taxa": 0.8863232682060391,
+   "lic": 0.880617072947002,
+   "lsc": 0.9508592787509564,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-04-24",
+   "pedidos": 665,
+   "taxa": 0.9112781954887218,
+   "lic": 0.8834226281982939,
+   "lsc": 0.9480537234996645,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-05-01",
+   "pedidos": 777,
+   "taxa": 0.9356499356499357,
+   "lic": 0.8858422619854642,
+   "lsc": 0.9456340897124942,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-05-08",
+   "pedidos": 779,
+   "taxa": 0.9255455712451861,
+   "lic": 0.8858806639459054,
+   "lsc": 0.945595687752053,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-05-15",
+   "pedidos": 932,
+   "taxa": 0.9613733905579399,
+   "lic": 0.8884412093485725,
+   "lsc": 0.9430351423493859,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-05-22",
+   "pedidos": 772,
+   "taxa": 0.9546632124352331,
+   "lic": 0.8857456050444258,
+   "lsc": 0.9457307466535326,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-05-29",
+   "pedidos": 820,
+   "taxa": 0.9524390243902439,
+   "lic": 0.8866366730322846,
+   "lsc": 0.9448396786656739,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-06-05",
+   "pedidos": 834,
+   "taxa": 0.9544364508393285,
+   "lic": 0.8868819640054009,
+   "lsc": 0.9445943876925575,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-06-12",
+   "pedidos": 741,
+   "taxa": 0.9406207827260459,
+   "lic": 0.8851246579287105,
+   "lsc": 0.9463516937692479,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-06-19",
+   "pedidos": 655,
+   "taxa": 0.9358778625954198,
+   "lic": 0.8831768790493102,
+   "lsc": 0.9482994726486482,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-06-26",
+   "pedidos": 719,
+   "taxa": 0.9554937413073713,
+   "lic": 0.8846598298266692,
+   "lsc": 0.9468165218712892,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-07-03",
+   "pedidos": 813,
+   "taxa": 0.9544895448954489,
+   "lic": 0.8865116583299079,
+   "lsc": 0.9449646933680506,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-07-10",
+   "pedidos": 942,
+   "taxa": 0.9511677282377919,
+   "lic": 0.8885864842836714,
+   "lsc": 0.942889867414287,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-07-17",
+   "pedidos": 948,
+   "taxa": 0.959915611814346,
+   "lic": 0.8886725437444214,
+   "lsc": 0.942803807953537,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-07-24",
+   "pedidos": 914,
+   "taxa": 0.9485776805251641,
+   "lic": 0.8881737313225178,
+   "lsc": 0.9433026203754407,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-07-31",
+   "pedidos": 970,
+   "taxa": 0.954639175257732,
+   "lic": 0.8889812339368214,
+   "lsc": 0.942495117761137,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-08-07",
+   "pedidos": 921,
+   "taxa": 0.9609120521172638,
+   "lic": 0.8882786819955186,
+   "lsc": 0.9431976697024398,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-08-14",
+   "pedidos": 1028,
+   "taxa": 0.9552529182879378,
+   "lic": 0.8897470084949722,
+   "lsc": 0.9417293432029862,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-08-21",
+   "pedidos": 882,
+   "taxa": 0.9501133786848073,
+   "lic": 0.8876781510584969,
+   "lsc": 0.9437982006394615,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-08-28",
+   "pedidos": 1001,
+   "taxa": 0.9470529470529471,
+   "lic": 0.8893988106304369,
+   "lsc": 0.9420775410675215,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-09-04",
+   "pedidos": 892,
+   "taxa": 0.9439461883408071,
+   "lic": 0.8878358815085983,
+   "lsc": 0.9436404701893601,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-09-11",
+   "pedidos": 1150,
+   "taxa": 0.922608695652174,
+   "lic": 0.8911643134129987,
+   "lsc": 0.9403120382849597,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-09-18",
+   "pedidos": 978,
+   "taxa": 0.934560327198364,
+   "lic": 0.8890908939962475,
+   "lsc": 0.9423854577017109,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-09-25",
+   "pedidos": 948,
+   "taxa": 0.9525316455696202,
+   "lic": 0.8886725437444214,
+   "lsc": 0.942803807953537,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-10-02",
+   "pedidos": 987,
+   "taxa": 0.961499493414387,
+   "lic": 0.8892126643905439,
+   "lsc": 0.9422636873074145,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-10-09",
+   "pedidos": 1047,
+   "taxa": 0.9379178605539638,
+   "lic": 0.8899839202168119,
+   "lsc": 0.9414924314811465,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-10-16",
+   "pedidos": 1125,
+   "taxa": 0.9377777777777778,
+   "lic": 0.8908927707781396,
+   "lsc": 0.9405835809198189,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-10-23",
+   "pedidos": 962,
+   "taxa": 0.946985446985447,
+   "lic": 0.8888702088046824,
+   "lsc": 0.942606142893276,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-10-30",
+   "pedidos": 917,
+   "taxa": 0.9389312977099237,
+   "lic": 0.8882188573192609,
+   "lsc": 0.9432574943786975,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-11-06",
+   "pedidos": 1191,
+   "taxa": 0.9319899244332494,
+   "lic": 0.8915909934732156,
+   "lsc": 0.9398853582247428,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-11-13",
+   "pedidos": 1283,
+   "taxa": 0.8994544037412315,
+   "lic": 0.8924728566846292,
+   "lsc": 0.9390034950133292,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-11-20",
+   "pedidos": 2972,
+   "taxa": 0.8115746971736204,
+   "lic": 0.9004520320617821,
+   "lsc": 0.9310243196361763,
+   "fora": true
+  },
+  {
+   "dia_compra": "2017-11-27",
+   "pedidos": 2077,
+   "taxa": 0.8415984593163216,
+   "lic": 0.8974527914463482,
+   "lsc": 0.9340235602516103,
+   "fora": true
+  },
+  {
+   "dia_compra": "2017-12-04",
+   "pedidos": 1661,
+   "taxa": 0.8801926550270921,
+   "lic": 0.8952908025060275,
+   "lsc": 0.9361855491919309,
+   "fora": true
+  },
+  {
+   "dia_compra": "2017-12-11",
+   "pedidos": 1396,
+   "taxa": 0.9240687679083095,
+   "lic": 0.8934343362159639,
+   "lsc": 0.9380420154819945,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-12-18",
+   "pedidos": 970,
+   "taxa": 0.9216494845360824,
+   "lic": 0.8889812339368214,
+   "lsc": 0.942495117761137,
+   "fora": false
+  },
+  {
+   "dia_compra": "2017-12-25",
+   "pedidos": 872,
+   "taxa": 0.9495412844036697,
+   "lic": 0.8875177150752841,
+   "lsc": 0.9439586366226743,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-01-01",
+   "pedidos": 1371,
+   "taxa": 0.9452954048140044,
+   "lic": 0.8932319011379514,
+   "lsc": 0.938244450560007,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-01-08",
+   "pedidos": 1771,
+   "taxa": 0.9424054206662902,
+   "lic": 0.8959359931832654,
+   "lsc": 0.935540358514693,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-01-15",
+   "pedidos": 1734,
+   "taxa": 0.9158016147635525,
+   "lic": 0.8957258393671378,
+   "lsc": 0.9357505123308206,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-01-22",
+   "pedidos": 1566,
+   "taxa": 0.9137931034482759,
+   "lic": 0.8946797228349644,
+   "lsc": 0.936796628862994,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-01-29",
+   "pedidos": 1571,
+   "taxa": 0.9293443666454487,
+   "lic": 0.8947132607651729,
+   "lsc": 0.9367630909327855,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-02-05",
+   "pedidos": 1552,
+   "taxa": 0.907860824742268,
+   "lic": 0.8945849559331693,
+   "lsc": 0.9368913957647891,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-02-12",
+   "pedidos": 1611,
+   "taxa": 0.8628181253879578,
+   "lic": 0.8949759183612322,
+   "lsc": 0.9365004333367262,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-02-19",
+   "pedidos": 1735,
+   "taxa": 0.7994236311239193,
+   "lic": 0.8957316074423353,
+   "lsc": 0.9357447442556232,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-02-26",
+   "pedidos": 1881,
+   "taxa": 0.7240829346092504,
+   "lic": 0.8965237263990485,
+   "lsc": 0.9349526252989099,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-03-05",
+   "pedidos": 1633,
+   "taxa": 0.736068585425597,
+   "lic": 0.8951162485913571,
+   "lsc": 0.9363601031066013,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-03-12",
+   "pedidos": 1589,
+   "taxa": 0.7652611705475142,
+   "lic": 0.8948326837795916,
+   "lsc": 0.9366436679183668,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-03-19",
+   "pedidos": 1708,
+   "taxa": 0.8624121779859485,
+   "lic": 0.8955740959436501,
+   "lsc": 0.9359022557543083,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-03-26",
+   "pedidos": 1464,
+   "taxa": 0.8688524590163934,
+   "lic": 0.8939584803009102,
+   "lsc": 0.9375178713970482,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-04-02",
+   "pedidos": 1586,
+   "taxa": 0.912358133669609,
+   "lic": 0.8948129212176842,
+   "lsc": 0.9366634304802742,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-04-09",
+   "pedidos": 1551,
+   "taxa": 0.9464861379754996,
+   "lic": 0.8945781378121491,
+   "lsc": 0.9368982138858093,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-04-16",
+   "pedidos": 1665,
+   "taxa": 0.9471471471471471,
+   "lic": 0.895315378684792,
+   "lsc": 0.9361609730131664,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-04-23",
+   "pedidos": 1670,
+   "taxa": 0.9491017964071856,
+   "lic": 0.89534597465278,
+   "lsc": 0.9361303770451784,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-04-30",
+   "pedidos": 1762,
+   "taxa": 0.9472190692395006,
+   "lic": 0.8958854844873632,
+   "lsc": 0.9355908672105953,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-05-07",
+   "pedidos": 1971,
+   "taxa": 0.9223744292237442,
+   "lic": 0.8969675379963068,
+   "lsc": 0.9345088137016516,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-05-14",
+   "pedidos": 1830,
+   "taxa": 0.8666666666666667,
+   "lic": 0.8962578239390865,
+   "lsc": 0.9352185277588719,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-05-21",
+   "pedidos": 946,
+   "taxa": 0.9545454545454546,
+   "lic": 0.8886439482455798,
+   "lsc": 0.9428324034523786,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-05-28",
+   "pedidos": 1081,
+   "taxa": 0.9907493061979649,
+   "lic": 0.890392172029868,
+   "lsc": 0.9410841796680904,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-06-04",
+   "pedidos": 1433,
+   "taxa": 0.9790648988136776,
+   "lic": 0.8937241613716164,
+   "lsc": 0.937752190326342,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-06-11",
+   "pedidos": 1512,
+   "taxa": 0.9728835978835979,
+   "lic": 0.8943069779148588,
+   "lsc": 0.9371693737830996,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-06-18",
+   "pedidos": 1451,
+   "taxa": 0.9841488628532047,
+   "lic": 0.8938611320275399,
+   "lsc": 0.9376152196704185,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-06-25",
+   "pedidos": 1393,
+   "taxa": 0.9820531227566404,
+   "lic": 0.8934103320766763,
+   "lsc": 0.9380660196212821,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-07-02",
+   "pedidos": 1188,
+   "taxa": 0.9772727272727273,
+   "lic": 0.8915605238303367,
+   "lsc": 0.9399158278676217,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-07-09",
+   "pedidos": 988,
+   "taxa": 0.9311740890688259,
+   "lic": 0.8892260916308163,
+   "lsc": 0.9422502600671421,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-07-16",
+   "pedidos": 1666,
+   "taxa": 0.9603841536614646,
+   "lic": 0.8953215088956953,
+   "lsc": 0.9361548428022631,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-07-23",
+   "pedidos": 1634,
+   "taxa": 0.9583843329253366,
+   "lic": 0.8951225598163733,
+   "lsc": 0.9363537918815851,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-07-30",
+   "pedidos": 2030,
+   "taxa": 0.8955665024630541,
+   "lic": 0.897242324599675,
+   "lsc": 0.9342340270982834,
+   "fora": true
+  },
+  {
+   "dia_compra": "2018-08-06",
+   "pedidos": 1961,
+   "taxa": 0.9005609382967874,
+   "lic": 0.8969197389939035,
+   "lsc": 0.9345566127040549,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-08-13",
+   "pedidos": 1852,
+   "taxa": 0.9568034557235421,
+   "lic": 0.896373873642781,
+   "lsc": 0.9351024780551774,
+   "fora": false
+  },
+  {
+   "dia_compra": "2018-08-20",
+   "pedidos": 1058,
+   "taxa": 0.9744801512287334,
+   "lic": 0.890118153214191,
+   "lsc": 0.9413581984837674,
+   "fora": false
+  }
+ ],
+ "p_barra": 0.9157381758489792,
+ "curva": [
+  {
+   "metodo": "rota",
+   "q": 0.8,
+   "no_prazo": 0.8378292546235756,
+   "dias": 18.248402764804784
+  },
+  {
+   "metodo": "rota",
+   "q": 0.85,
+   "no_prazo": 0.8751914814122922,
+   "dias": 20.39433962264151
+  },
+  {
+   "metodo": "rota",
+   "q": 0.9,
+   "no_prazo": 0.9100878012329535,
+   "dias": 23.359518027274426
+  },
+  {
+   "metodo": "rota",
+   "q": 0.93,
+   "no_prazo": 0.9315337194096768,
+   "dias": 25.981729871100317
+  },
+  {
+   "metodo": "rota",
+   "q": 0.95,
+   "no_prazo": 0.9459742200635158,
+   "dias": 28.50590323183262
+  },
+  {
+   "metodo": "rota",
+   "q": 0.97,
+   "no_prazo": 0.9615355875210162,
+   "dias": 32.54085559499346
+  },
+  {
+   "metodo": "quantilica",
+   "q": 0.85,
+   "no_prazo": 0.8639080889220998,
+   "dias": 19.084419951429105
+  },
+  {
+   "metodo": "quantilica",
+   "q": 0.88,
+   "no_prazo": 0.884251821408556,
+   "dias": 20.38864188305623
+  },
+  {
+   "metodo": "quantilica",
+   "q": 0.9,
+   "no_prazo": 0.8988791331963385,
+   "dias": 21.456940033626005
+  },
+  {
+   "metodo": "quantilica",
+   "q": 0.92,
+   "no_prazo": 0.9131888660564169,
+   "dias": 22.80681860638894
+  },
+  {
+   "metodo": "quantilica",
+   "q": 0.94,
+   "no_prazo": 0.9280590323183262,
+   "dias": 24.47012889968242
+  },
+  {
+   "metodo": "quantilica",
+   "q": 0.96,
+   "no_prazo": 0.9427610685596861,
+   "dias": 26.838651223612928
+  },
+  {
+   "metodo": "olist",
+   "q": null,
+   "no_prazo": 0.9097515411918551,
+   "dias": 23.447842331402953
+  }
+ ],
+ "por_q": {
+  "0.85": {
+   "geral_atual": 0.9097515411918551,
+   "geral_nova": 0.8639080889220998,
+   "dias_atual": 23.447842331402953,
+   "dias_nova": 19.084419951429105,
+   "sd_atual": 0.05176952127780721,
+   "sd_nova": 0.02408130168635181,
+   "nota_atual": 4.094026770035494,
+   "nota_nova": 3.9956674201382403,
+   "ufs": [
+    {
+     "customer_state": "SP",
+     "pedidos": 23598,
+     "no_prazo_atual": 0.939,
+     "no_prazo_nova": 0.878,
+     "promessa_atual": 18.0,
+     "promessa_nova": 13.0,
+     "dif_dias": -5.0
+    },
+    {
+     "customer_state": "RJ",
+     "pedidos": 6516,
+     "no_prazo_atual": 0.84,
+     "no_prazo_nova": 0.832,
+     "promessa_atual": 28.0,
+     "promessa_nova": 27.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "MG",
+     "pedidos": 6134,
+     "no_prazo_atual": 0.93,
+     "no_prazo_nova": 0.861,
+     "promessa_atual": 24.0,
+     "promessa_nova": 18.0,
+     "dif_dias": -6.0
+    },
+    {
+     "customer_state": "RS",
+     "pedidos": 2764,
+     "no_prazo_atual": 0.919,
+     "no_prazo_nova": 0.876,
+     "promessa_atual": 29.0,
+     "promessa_nova": 24.0,
+     "dif_dias": -5.0
+    },
+    {
+     "customer_state": "PR",
+     "pedidos": 2733,
+     "no_prazo_atual": 0.945,
+     "no_prazo_nova": 0.875,
+     "promessa_atual": 24.0,
+     "promessa_nova": 18.0,
+     "dif_dias": -6.0
+    },
+    {
+     "customer_state": "SC",
+     "pedidos": 1896,
+     "no_prazo_atual": 0.906,
+     "no_prazo_nova": 0.862,
+     "promessa_atual": 26.0,
+     "promessa_nova": 23.0,
+     "dif_dias": -3.0
+    },
+    {
+     "customer_state": "BA",
+     "pedidos": 1770,
+     "no_prazo_atual": 0.838,
+     "no_prazo_nova": 0.838,
+     "promessa_atual": 28.0,
+     "promessa_nova": 29.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "DF",
+     "pedidos": 1210,
+     "no_prazo_atual": 0.92,
+     "no_prazo_nova": 0.862,
+     "promessa_atual": 23.0,
+     "promessa_nova": 20.0,
+     "dif_dias": -3.0
+    },
+    {
+     "customer_state": "ES",
+     "pedidos": 1055,
+     "no_prazo_atual": 0.856,
+     "no_prazo_nova": 0.861,
+     "promessa_atual": 24.0,
+     "promessa_nova": 24.0,
+     "dif_dias": 0.0
+    },
+    {
+     "customer_state": "GO",
+     "pedidos": 1048,
+     "no_prazo_atual": 0.909,
+     "no_prazo_nova": 0.867,
+     "promessa_atual": 26.0,
+     "promessa_nova": 22.0,
+     "dif_dias": -4.0
+    },
+    {
+     "customer_state": "PE",
+     "pedidos": 872,
+     "no_prazo_atual": 0.88,
+     "no_prazo_nova": 0.861,
+     "promessa_atual": 29.0,
+     "promessa_nova": 28.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "CE",
+     "pedidos": 662,
+     "no_prazo_atual": 0.773,
+     "no_prazo_nova": 0.793,
+     "promessa_atual": 30.0,
+     "promessa_nova": 32.0,
+     "dif_dias": 2.0
+    }
+   ]
+  },
+  "0.88": {
+   "geral_atual": 0.9097515411918551,
+   "geral_nova": 0.884251821408556,
+   "dias_atual": 23.447842331402953,
+   "dias_nova": 20.38864188305623,
+   "sd_atual": 0.05176952127780721,
+   "sd_nova": 0.025966761971272564,
+   "nota_atual": 4.094026770035494,
+   "nota_nova": 4.039642331402951,
+   "ufs": [
+    {
+     "customer_state": "SP",
+     "pedidos": 23598,
+     "no_prazo_atual": 0.939,
+     "no_prazo_nova": 0.896,
+     "promessa_atual": 18.0,
+     "promessa_nova": 14.0,
+     "dif_dias": -4.0
+    },
+    {
+     "customer_state": "RJ",
+     "pedidos": 6516,
+     "no_prazo_atual": 0.84,
+     "no_prazo_nova": 0.856,
+     "promessa_atual": 28.0,
+     "promessa_nova": 29.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "MG",
+     "pedidos": 6134,
+     "no_prazo_atual": 0.93,
+     "no_prazo_nova": 0.885,
+     "promessa_atual": 24.0,
+     "promessa_nova": 20.0,
+     "dif_dias": -4.0
+    },
+    {
+     "customer_state": "RS",
+     "pedidos": 2764,
+     "no_prazo_atual": 0.919,
+     "no_prazo_nova": 0.893,
+     "promessa_atual": 29.0,
+     "promessa_nova": 26.0,
+     "dif_dias": -3.0
+    },
+    {
+     "customer_state": "PR",
+     "pedidos": 2733,
+     "no_prazo_atual": 0.945,
+     "no_prazo_nova": 0.899,
+     "promessa_atual": 24.0,
+     "promessa_nova": 20.0,
+     "dif_dias": -4.0
+    },
+    {
+     "customer_state": "SC",
+     "pedidos": 1896,
+     "no_prazo_atual": 0.906,
+     "no_prazo_nova": 0.882,
+     "promessa_atual": 26.0,
+     "promessa_nova": 25.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "BA",
+     "pedidos": 1770,
+     "no_prazo_atual": 0.838,
+     "no_prazo_nova": 0.86,
+     "promessa_atual": 28.0,
+     "promessa_nova": 30.0,
+     "dif_dias": 2.0
+    },
+    {
+     "customer_state": "DF",
+     "pedidos": 1210,
+     "no_prazo_atual": 0.92,
+     "no_prazo_nova": 0.884,
+     "promessa_atual": 23.0,
+     "promessa_nova": 21.0,
+     "dif_dias": -2.0
+    },
+    {
+     "customer_state": "ES",
+     "pedidos": 1055,
+     "no_prazo_atual": 0.856,
+     "no_prazo_nova": 0.877,
+     "promessa_atual": 24.0,
+     "promessa_nova": 25.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "GO",
+     "pedidos": 1048,
+     "no_prazo_atual": 0.909,
+     "no_prazo_nova": 0.888,
+     "promessa_atual": 26.0,
+     "promessa_nova": 24.0,
+     "dif_dias": -2.0
+    },
+    {
+     "customer_state": "PE",
+     "pedidos": 872,
+     "no_prazo_atual": 0.88,
+     "no_prazo_nova": 0.882,
+     "promessa_atual": 29.0,
+     "promessa_nova": 30.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "CE",
+     "pedidos": 662,
+     "no_prazo_atual": 0.773,
+     "no_prazo_nova": 0.804,
+     "promessa_atual": 30.0,
+     "promessa_nova": 35.0,
+     "dif_dias": 5.0
+    }
+   ]
+  },
+  "0.90": {
+   "geral_atual": 0.9097515411918551,
+   "geral_nova": 0.8988791331963385,
+   "dias_atual": 23.447842331402953,
+   "dias_nova": 21.456940033626005,
+   "sd_atual": 0.05176952127780721,
+   "sd_nova": 0.024999848484389367,
+   "nota_atual": 4.094026770035494,
+   "nota_nova": 4.071111096581356,
+   "ufs": [
+    {
+     "customer_state": "SP",
+     "pedidos": 23598,
+     "no_prazo_atual": 0.939,
+     "no_prazo_nova": 0.909,
+     "promessa_atual": 18.0,
+     "promessa_nova": 15.0,
+     "dif_dias": -3.0
+    },
+    {
+     "customer_state": "RJ",
+     "pedidos": 6516,
+     "no_prazo_atual": 0.84,
+     "no_prazo_nova": 0.875,
+     "promessa_atual": 28.0,
+     "promessa_nova": 31.0,
+     "dif_dias": 3.0
+    },
+    {
+     "customer_state": "MG",
+     "pedidos": 6134,
+     "no_prazo_atual": 0.93,
+     "no_prazo_nova": 0.897,
+     "promessa_atual": 24.0,
+     "promessa_nova": 21.0,
+     "dif_dias": -3.0
+    },
+    {
+     "customer_state": "RS",
+     "pedidos": 2764,
+     "no_prazo_atual": 0.919,
+     "no_prazo_nova": 0.91,
+     "promessa_atual": 29.0,
+     "promessa_nova": 28.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "PR",
+     "pedidos": 2733,
+     "no_prazo_atual": 0.945,
+     "no_prazo_nova": 0.916,
+     "promessa_atual": 24.0,
+     "promessa_nova": 21.0,
+     "dif_dias": -3.0
+    },
+    {
+     "customer_state": "SC",
+     "pedidos": 1896,
+     "no_prazo_atual": 0.906,
+     "no_prazo_nova": 0.897,
+     "promessa_atual": 26.0,
+     "promessa_nova": 26.0,
+     "dif_dias": 0.0
+    },
+    {
+     "customer_state": "BA",
+     "pedidos": 1770,
+     "no_prazo_atual": 0.838,
+     "no_prazo_nova": 0.877,
+     "promessa_atual": 28.0,
+     "promessa_nova": 32.0,
+     "dif_dias": 4.0
+    },
+    {
+     "customer_state": "DF",
+     "pedidos": 1210,
+     "no_prazo_atual": 0.92,
+     "no_prazo_nova": 0.902,
+     "promessa_atual": 23.0,
+     "promessa_nova": 22.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "ES",
+     "pedidos": 1055,
+     "no_prazo_atual": 0.856,
+     "no_prazo_nova": 0.891,
+     "promessa_atual": 24.0,
+     "promessa_nova": 26.0,
+     "dif_dias": 2.0
+    },
+    {
+     "customer_state": "GO",
+     "pedidos": 1048,
+     "no_prazo_atual": 0.909,
+     "no_prazo_nova": 0.906,
+     "promessa_atual": 26.0,
+     "promessa_nova": 25.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "PE",
+     "pedidos": 872,
+     "no_prazo_atual": 0.88,
+     "no_prazo_nova": 0.9,
+     "promessa_atual": 29.0,
+     "promessa_nova": 31.0,
+     "dif_dias": 2.0
+    },
+    {
+     "customer_state": "CE",
+     "pedidos": 662,
+     "no_prazo_atual": 0.773,
+     "no_prazo_nova": 0.823,
+     "promessa_atual": 30.0,
+     "promessa_nova": 37.0,
+     "dif_dias": 7.0
+    }
+   ]
+  },
+  "0.92": {
+   "geral_atual": 0.9097515411918551,
+   "geral_nova": 0.9131888660564169,
+   "dias_atual": 23.447842331402953,
+   "dias_nova": 22.80681860638894,
+   "sd_atual": 0.05176952127780721,
+   "sd_nova": 0.023839742727918316,
+   "nota_atual": 4.094026770035494,
+   "nota_nova": 4.104273622267887,
+   "ufs": [
+    {
+     "customer_state": "SP",
+     "pedidos": 23598,
+     "no_prazo_atual": 0.939,
+     "no_prazo_nova": 0.923,
+     "promessa_atual": 18.0,
+     "promessa_nova": 16.0,
+     "dif_dias": -2.0
+    },
+    {
+     "customer_state": "RJ",
+     "pedidos": 6516,
+     "no_prazo_atual": 0.84,
+     "no_prazo_nova": 0.888,
+     "promessa_atual": 28.0,
+     "promessa_nova": 34.0,
+     "dif_dias": 6.0
+    },
+    {
+     "customer_state": "MG",
+     "pedidos": 6134,
+     "no_prazo_atual": 0.93,
+     "no_prazo_nova": 0.915,
+     "promessa_atual": 24.0,
+     "promessa_nova": 22.0,
+     "dif_dias": -2.0
+    },
+    {
+     "customer_state": "RS",
+     "pedidos": 2764,
+     "no_prazo_atual": 0.919,
+     "no_prazo_nova": 0.923,
+     "promessa_atual": 29.0,
+     "promessa_nova": 30.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "PR",
+     "pedidos": 2733,
+     "no_prazo_atual": 0.945,
+     "no_prazo_nova": 0.933,
+     "promessa_atual": 24.0,
+     "promessa_nova": 22.0,
+     "dif_dias": -2.0
+    },
+    {
+     "customer_state": "SC",
+     "pedidos": 1896,
+     "no_prazo_atual": 0.906,
+     "no_prazo_nova": 0.912,
+     "promessa_atual": 26.0,
+     "promessa_nova": 28.0,
+     "dif_dias": 2.0
+    },
+    {
+     "customer_state": "BA",
+     "pedidos": 1770,
+     "no_prazo_atual": 0.838,
+     "no_prazo_nova": 0.901,
+     "promessa_atual": 28.0,
+     "promessa_nova": 33.0,
+     "dif_dias": 5.0
+    },
+    {
+     "customer_state": "DF",
+     "pedidos": 1210,
+     "no_prazo_atual": 0.92,
+     "no_prazo_nova": 0.905,
+     "promessa_atual": 23.0,
+     "promessa_nova": 23.0,
+     "dif_dias": 0.0
+    },
+    {
+     "customer_state": "ES",
+     "pedidos": 1055,
+     "no_prazo_atual": 0.856,
+     "no_prazo_nova": 0.906,
+     "promessa_atual": 24.0,
+     "promessa_nova": 28.0,
+     "dif_dias": 4.0
+    },
+    {
+     "customer_state": "GO",
+     "pedidos": 1048,
+     "no_prazo_atual": 0.909,
+     "no_prazo_nova": 0.917,
+     "promessa_atual": 26.0,
+     "promessa_nova": 26.0,
+     "dif_dias": 0.0
+    },
+    {
+     "customer_state": "PE",
+     "pedidos": 872,
+     "no_prazo_atual": 0.88,
+     "no_prazo_nova": 0.907,
+     "promessa_atual": 29.0,
+     "promessa_nova": 34.0,
+     "dif_dias": 5.0
+    },
+    {
+     "customer_state": "CE",
+     "pedidos": 662,
+     "no_prazo_atual": 0.773,
+     "no_prazo_nova": 0.84,
+     "promessa_atual": 30.0,
+     "promessa_nova": 39.0,
+     "dif_dias": 9.0
+    }
+   ]
+  },
+  "0.94": {
+   "geral_atual": 0.9097515411918551,
+   "geral_nova": 0.9280590323183262,
+   "dias_atual": 23.447842331402953,
+   "dias_nova": 24.47012889968242,
+   "sd_atual": 0.05176952127780721,
+   "sd_nova": 0.022125502904744986,
+   "nota_atual": 4.094026770035494,
+   "nota_nova": 4.137499084625444,
+   "ufs": [
+    {
+     "customer_state": "SP",
+     "pedidos": 23598,
+     "no_prazo_atual": 0.939,
+     "no_prazo_nova": 0.937,
+     "promessa_atual": 18.0,
+     "promessa_nova": 17.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "RJ",
+     "pedidos": 6516,
+     "no_prazo_atual": 0.84,
+     "no_prazo_nova": 0.906,
+     "promessa_atual": 28.0,
+     "promessa_nova": 37.0,
+     "dif_dias": 9.0
+    },
+    {
+     "customer_state": "MG",
+     "pedidos": 6134,
+     "no_prazo_atual": 0.93,
+     "no_prazo_nova": 0.928,
+     "promessa_atual": 24.0,
+     "promessa_nova": 23.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "RS",
+     "pedidos": 2764,
+     "no_prazo_atual": 0.919,
+     "no_prazo_nova": 0.94,
+     "promessa_atual": 29.0,
+     "promessa_nova": 32.0,
+     "dif_dias": 3.0
+    },
+    {
+     "customer_state": "PR",
+     "pedidos": 2733,
+     "no_prazo_atual": 0.945,
+     "no_prazo_nova": 0.943,
+     "promessa_atual": 24.0,
+     "promessa_nova": 23.0,
+     "dif_dias": -1.0
+    },
+    {
+     "customer_state": "SC",
+     "pedidos": 1896,
+     "no_prazo_atual": 0.906,
+     "no_prazo_nova": 0.926,
+     "promessa_atual": 26.0,
+     "promessa_nova": 29.0,
+     "dif_dias": 3.0
+    },
+    {
+     "customer_state": "BA",
+     "pedidos": 1770,
+     "no_prazo_atual": 0.838,
+     "no_prazo_nova": 0.919,
+     "promessa_atual": 28.0,
+     "promessa_nova": 36.0,
+     "dif_dias": 8.0
+    },
+    {
+     "customer_state": "DF",
+     "pedidos": 1210,
+     "no_prazo_atual": 0.92,
+     "no_prazo_nova": 0.922,
+     "promessa_atual": 23.0,
+     "promessa_nova": 24.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "ES",
+     "pedidos": 1055,
+     "no_prazo_atual": 0.856,
+     "no_prazo_nova": 0.919,
+     "promessa_atual": 24.0,
+     "promessa_nova": 30.0,
+     "dif_dias": 6.0
+    },
+    {
+     "customer_state": "GO",
+     "pedidos": 1048,
+     "no_prazo_atual": 0.909,
+     "no_prazo_nova": 0.937,
+     "promessa_atual": 26.0,
+     "promessa_nova": 28.0,
+     "dif_dias": 2.0
+    },
+    {
+     "customer_state": "PE",
+     "pedidos": 872,
+     "no_prazo_atual": 0.88,
+     "no_prazo_nova": 0.92,
+     "promessa_atual": 29.0,
+     "promessa_nova": 36.0,
+     "dif_dias": 7.0
+    },
+    {
+     "customer_state": "CE",
+     "pedidos": 662,
+     "no_prazo_atual": 0.773,
+     "no_prazo_nova": 0.86,
+     "promessa_atual": 30.0,
+     "promessa_nova": 41.0,
+     "dif_dias": 11.0
+    }
+   ]
+  },
+  "0.96": {
+   "geral_atual": 0.9097515411918551,
+   "geral_nova": 0.9427610685596861,
+   "dias_atual": 23.447842331402953,
+   "dias_nova": 26.838651223612928,
+   "sd_atual": 0.05176952127780721,
+   "sd_nova": 0.019185497995447824,
+   "nota_atual": 4.094026770035494,
+   "nota_nova": 4.1735374929945825,
+   "ufs": [
+    {
+     "customer_state": "SP",
+     "pedidos": 23598,
+     "no_prazo_atual": 0.939,
+     "no_prazo_nova": 0.951,
+     "promessa_atual": 18.0,
+     "promessa_nova": 19.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "RJ",
+     "pedidos": 6516,
+     "no_prazo_atual": 0.84,
+     "no_prazo_nova": 0.926,
+     "promessa_atual": 28.0,
+     "promessa_nova": 41.0,
+     "dif_dias": 13.0
+    },
+    {
+     "customer_state": "MG",
+     "pedidos": 6134,
+     "no_prazo_atual": 0.93,
+     "no_prazo_nova": 0.942,
+     "promessa_atual": 24.0,
+     "promessa_nova": 25.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "RS",
+     "pedidos": 2764,
+     "no_prazo_atual": 0.919,
+     "no_prazo_nova": 0.957,
+     "promessa_atual": 29.0,
+     "promessa_nova": 35.0,
+     "dif_dias": 6.0
+    },
+    {
+     "customer_state": "PR",
+     "pedidos": 2733,
+     "no_prazo_atual": 0.945,
+     "no_prazo_nova": 0.957,
+     "promessa_atual": 24.0,
+     "promessa_nova": 25.0,
+     "dif_dias": 1.0
+    },
+    {
+     "customer_state": "SC",
+     "pedidos": 1896,
+     "no_prazo_atual": 0.906,
+     "no_prazo_nova": 0.938,
+     "promessa_atual": 26.0,
+     "promessa_nova": 32.0,
+     "dif_dias": 6.0
+    },
+    {
+     "customer_state": "BA",
+     "pedidos": 1770,
+     "no_prazo_atual": 0.838,
+     "no_prazo_nova": 0.933,
+     "promessa_atual": 28.0,
+     "promessa_nova": 38.0,
+     "dif_dias": 10.0
+    },
+    {
+     "customer_state": "DF",
+     "pedidos": 1210,
+     "no_prazo_atual": 0.92,
+     "no_prazo_nova": 0.937,
+     "promessa_atual": 23.0,
+     "promessa_nova": 26.0,
+     "dif_dias": 3.0
+    },
+    {
+     "customer_state": "ES",
+     "pedidos": 1055,
+     "no_prazo_atual": 0.856,
+     "no_prazo_nova": 0.936,
+     "promessa_atual": 24.0,
+     "promessa_nova": 32.0,
+     "dif_dias": 8.0
+    },
+    {
+     "customer_state": "GO",
+     "pedidos": 1048,
+     "no_prazo_atual": 0.909,
+     "no_prazo_nova": 0.95,
+     "promessa_atual": 26.0,
+     "promessa_nova": 30.0,
+     "dif_dias": 4.0
+    },
+    {
+     "customer_state": "PE",
+     "pedidos": 872,
+     "no_prazo_atual": 0.88,
+     "no_prazo_nova": 0.933,
+     "promessa_atual": 29.0,
+     "promessa_nova": 39.0,
+     "dif_dias": 10.0
+    },
+    {
+     "customer_state": "CE",
+     "pedidos": 662,
+     "no_prazo_atual": 0.773,
+     "no_prazo_nova": 0.885,
+     "promessa_atual": 30.0,
+     "promessa_nova": 45.0,
+     "dif_dias": 15.0
+    }
+   ]
+  }
+ },
+ "n_teste": 53530
+}
